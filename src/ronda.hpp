@@ -54,6 +54,10 @@ public:
     void avanzarTurno();
 
     //pre:
+    //pos: devuelve el nombre del jugador en turno
+    std::string getJugadorEnTurno();
+
+    //pre:
     //pos: el jugador en turno toma una carta y lee que tipo de carta es
     TiposCarta_T tomarCarta();
 

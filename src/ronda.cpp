@@ -22,6 +22,11 @@ ronda::ronda()
 
 ronda::~ronda()
 {
+    while (this->jugadores != NULL) // mientras haya jugadores
+    {
+        this->eliminarJugador(this->jugadores->getName()); // elimino al primer jugador de la lista
+    }
+    
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -60,3 +65,113 @@ void ronda::agregarJugador(jugador* player){
 
 //---------------------------------------------------------------------------------------------------------------------
 
+void ronda::eliminarJugador(std::string nombre){
+    jugador* aux;
+    jugador* aux2;
+
+
+    if (this->jugadores == NULL)
+    {
+        this->iniciarRonda(); // voy reiniciando la ronda cada vez que elimino un jugador para no dar la posibilidad a apuntar a memoria ajena
+        return;
+    }
+
+    aux2=this->jugadores;
+    aux=aux2->getSig();
+
+    if (aux == this->jugadores) //si habia solo un jugador en la lista lo borro y pongo la lista a null
+    {
+        this->jugadores=NULL; 
+        delete aux;
+        this->iniciarRonda();
+        return;
+    }
+    
+    
+    while (aux != this->jugadores) // hasta dar la vuelta a la ronda
+    {
+        if (aux->getName() == nombre) // si encuentro el nombre en la lista
+        {
+            aux2->setSiguiente(aux->getSig()); // saco al jugador con ese nombre
+            delete aux;
+            this->iniciarRonda();
+            return;
+        }
+
+        aux2=aux2->getSig(); // avanzo los dos cursores en 1
+        aux=aux2->getSig();
+
+        if (aux == NULL)
+        {
+            throw "error en la continuidad de la ronda";
+        }
+              
+    }
+    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::eliminarJugador(){
+    this->eliminarJugador(this->getJugadorEnTurno());
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::contarJugadores(){
+    jugador* aux;
+    int contador=0;
+
+    if (this->jugadores == NULL) // si la ronda esta acia devuelvo el contador
+    {
+        return contador;
+    }
+    
+
+    aux=this->jugadores;
+
+    contador ++; // aumento el contador porque habia almenos una carta
+
+    while (aux->getSig() != this->jugadores) // voy avanzando y con cada avance subo 1 al contador
+    {
+        contador++;
+        aux=aux->getSig();
+        if (aux == NULL)
+        {
+            throw "error en la continuidad de la ronda";
+        }
+        
+    }
+    return contador;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::iniciarRonda(){
+    this->jugadorEnTurno=this->jugadores;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::avanzarTurno(){
+    this->jugadorEnTurno=this->jugadorEnTurno->getSig();
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+std::string ronda::getJugadorEnTurno(){
+    if (this->jugadorEnTurno == NULL)
+    {
+        throw "no hay jugadores en turno";
+    }
+    
+    return this->jugadorEnTurno->getName();
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+//                                              METODOS SOBRE CARTAS
+//---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T ronda::tomarCarta(){
+
+}
