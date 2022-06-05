@@ -26,7 +26,7 @@ jugador::~jugador()
 {
     while (this->cartas !=NULL)
     {
-        this->retirarCarta(this->cartas);
+        this->retirarCarta(this->cartas->getPos());
     }
     
 }
@@ -47,10 +47,11 @@ void jugador::agregarCarta(carta* nueva){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void jugador::retirarCarta(carta* vieja){
+void jugador::retirarCarta(unsigned int posVieja []){
     carta* aux;
+    carta* aux2;
 
-    if (vieja == NULL)
+    if (posVieja == NULL)
     {
         throw "carta invalida";
     }
@@ -62,22 +63,23 @@ void jugador::retirarCarta(carta* vieja){
 
     aux=this->cartas;
 
-    if (aux == vieja)
+    if (aux->getPos() == posVieja)
     {
-        this->cartas=vieja->getNext();
-        delete vieja;
+        this->cartas=aux->getNext(); // si la carta a eliminar es la primera del mazo la cambio por la que le sigue y la borro
+        delete aux;
         return;
     }   
 
-    while (aux->getNext() != NULL && aux->getNext() != vieja)
+    while (aux->getNext() != NULL && aux->getPos() != posVieja) // voy buscando la carta en esa posicion hasta terminar el monton
     {
+        aux2=aux;
         aux=aux->getNext();
     }
 
-    if (aux->getNext() == vieja)
+    if (aux->getPos() == posVieja)
     {
-        aux->setNext(vieja->getNext());
-        delete vieja;
+        aux2->setNext(aux->getNext()); // cuando encontre la carta en dicha posicion la saco de la lista
+        delete aux;
     } 
 }
 

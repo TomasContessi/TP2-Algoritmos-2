@@ -28,6 +28,8 @@ private:
     int disparos; // cantidad de disparos por turno que tiene la carta
     int movimiento [3]; // distancia que se puede mover una carta en un turno en cada terreno. 0 tierra, 1 aire, 2 agua
 
+    unsigned int posicion [3]; // posicion de la carta en el tablero
+
     carta* siguienteCarta; // siguiente carta de la lista
 
     //pre: el tipo de carta debe ser valido
@@ -55,6 +57,10 @@ public:
     //pos: carga el puntero pasado en el valor next
     void setNext (carta*);
 
+    //pre: la posicion debe ser un vector de 3 unsigned int
+    //pos: carga el estado a la carta
+    void setPos (unsigned int [3]);
+
     //pre:
     //pos: devuelve el tipo de carta
     TiposCarta_T getType ();
@@ -74,6 +80,10 @@ public:
     //pre:
     //pos: devuelve la siguiene carta
     carta* getNext();
+
+    //pre:
+    //pos: devuelve la posicion de la carta en el mapa
+    unsigned int* getPos();
     
 };
 

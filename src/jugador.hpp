@@ -24,22 +24,23 @@ private:
     carta* cartas; //lista de cartas que tiene el jugador
     EstadoJugador_T estado; //estado actual del jugador
     jugador * siguienteJugador; //puntero al siguiente jugador en la ronda
+
 public:
     //pre:
-    //pos:
+    //pos: crea un jugador con su nombre e inicializa su estado como activo y su mazo de cartas y siguiente en NULL
     jugador(std::string nombre);
 
     //pre:
-    //pos:
+    //pos: livera la memoria de la pila de cartas y elimina al jugador
     ~jugador();
 
     //pre:
-    //pos:
+    //pos: agrega la carta a la pila del jugador
     void agregarCarta(carta*);
 
     //pre:
-    //pos:
-    void retirarCarta(carta*);
+    //pos: retira la carta de la pila del jugador
+    void retirarCarta(unsigned int [3]);
 
     //pre:
     //pos:

@@ -15,8 +15,13 @@
 
 carta::carta(std::string propietario,TiposCarta_T tipo)
 {
-        this->propieario=propieario;
-        this->setType(tipo);
+    this->propieario=propieario;
+    this->setType(tipo);
+
+    for (int i = 0; i < 3; i++)
+    {
+        this->posicion[i] = 0;
+    }
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -130,6 +135,21 @@ void carta::setNext(carta* siguiente){
 }
 
 //---------------------------------------------------------------------------------------------------------------------
+
+void carta::setPos (unsigned int pos[]){
+    if (pos == NULL)
+    {
+        throw "posicion invalida para la carga";
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        this->posicion[i] = pos[i];
+    }
+    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
 //                                            METODOS DE OBTENCION DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -165,4 +185,10 @@ int carta::getRange(){
 
 carta* carta::getNext(){
     return this->siguienteCarta;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+unsigned int* carta::getPos(){
+    return this->posicion;
 }
