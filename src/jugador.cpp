@@ -1,4 +1,4 @@
-#include "jugador.h"
+#include "jugador.hpp"
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
