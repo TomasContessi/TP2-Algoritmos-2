@@ -5,13 +5,14 @@
 
 #include "estadoJugador.hpp"
 #include "carta.hpp"
+#include "compararPos.hpp"
 
 class carta;
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.0-------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                           DEFINICION DE LA CLASE JUGADOR
 //---------------------------------------------------------------------------------------------------------------------
@@ -71,20 +72,8 @@ public:
     TiposCarta_T getCardType (unsigned int [3]);
 
     //pre:
-    //pos: devuelve el area de efecto de la carta que el jugador tiene en la casilla especificada
-    int getCardAoE (unsigned int [3]);
-
-    //pre:
-    //pos: devuelve el rango de ataque de la carta que el jugador tiene en la casilla especificada
-    int getCardRange (unsigned int [3]);
-
-    //pre:
-    //pos: devuelve la municion que de la carta que el jugador tiene en la casilla especificada
-    int getCardAmmo (unsigned int [3]);
-
-    //pre:
-    //pos: devuelve los movimientos por terreno de la carta que el jugador tiene en la casilla especificada
-    int* getCardMov (unsigned int [3]);
+    //pos: devuelve las stats de la carta que el jugador tiene en la casilla especificada
+    CardStats getCardStats (unsigned int [3]);
     
 };
 

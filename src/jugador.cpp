@@ -3,6 +3,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                             METODOS DE LA CLASE JUGADOR
 //---------------------------------------------------------------------------------------------------------------------
@@ -63,20 +64,20 @@ void jugador::retirarCarta(unsigned int posVieja []){
 
     aux=this->cartas;
 
-    if (aux->getPos() == posVieja)
+    if (compararPos(aux->getPos() , posVieja))
     {
         this->cartas=aux->getNext(); // si la carta a eliminar es la primera del mazo la cambio por la que le sigue y la borro
         delete aux;
         return;
     }   
 
-    while (aux->getNext() != NULL && aux->getPos() != posVieja) // voy buscando la carta en esa posicion hasta terminar el monton
+    while (aux->getNext() != NULL && compararPos(aux->getPos(),posVieja) !=true) // voy buscando la carta en esa posicion hasta terminar el monton
     {
         aux2=aux;
         aux=aux->getNext();
     }
 
-    if (aux->getPos() == posVieja)
+    if (compararPos(aux->getPos() , posVieja))
     {
         aux2->setNext(aux->getNext()); // cuando encontre la carta en dicha posicion la saco de la lista
         delete aux;
@@ -102,6 +103,33 @@ unsigned int jugador::contarCartas(TiposCarta_T tipo){
     }
 
     return cuenta;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+CardStats jugador::getCardStats (unsigned int pos []){
+    carta* aux;
+    CardStats empy_stats;
+
+    if (this->cartas==NULL)
+    {
+        return empy_stats;
+    }
+
+    aux=this->cartas;
+
+    while (aux->getNext() != NULL && compararPos(aux->getPos(),pos) != true) // voy buscando la carta en esa posicion hasta terminar el monton
+    {
+        aux=aux->getNext();
+    }
+
+    if (compararPos(aux->getPos(),pos))
+    {
+        return aux->getStats();
+    }
+
+    return empy_stats;
+    
 }
 
 //---------------------------------------------------------------------------------------------------------------------
