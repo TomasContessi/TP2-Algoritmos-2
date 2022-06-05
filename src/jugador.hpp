@@ -43,28 +43,48 @@ public:
     void retirarCarta(unsigned int [3]);
 
     //pre:
-    //pos:
+    //pos: establece el jugador pasado como argumento como el siguiente del actual
     void setSiguiente(jugador*);
 
     //pre:
-    //pos:
+    //pos: establece el estado del jugador
     void setState(EstadoJugador_T);
 
     //pre:
-    //pos:
+    //pos: devuelve el estado del jgador
     EstadoJugador_T getState();
 
     //pre:
-    //pos:
+    //pos: devuelve el nombre del jugador
     std::string getName();
 
     //pre:
-    //pos:
+    //pos: devuelve el siguiente jugador
     jugador* getSig();
 
     //pre:
-    //pos:
+    //pos: cuenta la cantidad de cartas de un tipo que tiene el jugador
     unsigned int contarCartas(TiposCarta_T);
+
+    //pre:
+    //pos: devuelve el tipo de carta que el jugador tiene en la posicion especifica
+    TiposCarta_T getCardType (unsigned int [3]);
+
+    //pre:
+    //pos: devuelve el area de efecto de la carta que el jugador tiene en la casilla especificada
+    int getCardAoE (unsigned int [3]);
+
+    //pre:
+    //pos: devuelve el rango de ataque de la carta que el jugador tiene en la casilla especificada
+    int getCardRange (unsigned int [3]);
+
+    //pre:
+    //pos: devuelve la municion que de la carta que el jugador tiene en la casilla especificada
+    int getCardAmmo (unsigned int [3]);
+
+    //pre:
+    //pos: devuelve los movimientos por terreno de la carta que el jugador tiene en la casilla especificada
+    int* getCardMov (unsigned int [3]);
     
 };
 

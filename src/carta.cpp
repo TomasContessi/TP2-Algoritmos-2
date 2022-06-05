@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.0-------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                              METODOS DE LA CLASE CARTA
 //---------------------------------------------------------------------------------------------------------------------
@@ -38,76 +38,76 @@ void carta::setType(TiposCarta_T tipo){
     switch (tipo)
     {
     case misil:
-        this->alcance=30;
-        this->AoE=3;
-        this->disparos=1;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=0;
+        this->stats.alcance=30;
+        this->stats.AoE=3;
+        this->stats.disparos=1;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=0;
         break;
     case avion:
-        this->alcance=10;
-        this->AoE=1;
-        this->disparos=2;
-        this->movimiento[0]=1;
-        this->movimiento[1]=10;
-        this->movimiento[2]=0;
+        this->stats.alcance=10;
+        this->stats.AoE=1;
+        this->stats.disparos=2;
+        this->stats.movimiento[0]=1;
+        this->stats.movimiento[1]=10;
+        this->stats.movimiento[2]=0;
         break;
     case barco:
-        this->alcance=30;
-        this->AoE=3;
-        this->disparos=1;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=1;
+        this->stats.alcance=30;
+        this->stats.AoE=3;
+        this->stats.disparos=1;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=1;
         break;
     case bomba_atomica:
-        this->alcance=0;
-        this->AoE=30;
-        this->disparos=1;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=0;
+        this->stats.alcance=0;
+        this->stats.AoE=30;
+        this->stats.disparos=1;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=0;
         break;
     case dirigible:
-        this->alcance=0;
-        this->AoE=0;
-        this->disparos=0;
-        this->movimiento[0]=0;
-        this->movimiento[1]=1;
-        this->movimiento[2]=0;
+        this->stats.alcance=0;
+        this->stats.AoE=0;
+        this->stats.disparos=0;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=1;
+        this->stats.movimiento[2]=0;
         break;
     case ciclon:
-        this->alcance=0;
-        this->AoE=0;
-        this->disparos=0;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=0;
+        this->stats.alcance=0;
+        this->stats.AoE=0;
+        this->stats.disparos=0;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=0;
         break;
     case terremoto:
-        this->alcance=0;
-        this->AoE=0;
-        this->disparos=0;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=0;
+        this->stats.alcance=0;
+        this->stats.AoE=0;
+        this->stats.disparos=0;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=0;
         break;
     case tsunami:
-        this->alcance=0;
-        this->AoE=0;
-        this->disparos=0;
-        this->movimiento[0]=0;
-        this->movimiento[1]=0;
-        this->movimiento[2]=0;
+        this->stats.alcance=0;
+        this->stats.AoE=0;
+        this->stats.disparos=0;
+        this->stats.movimiento[0]=0;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=0;
         break;
     case soldado:
-        this->alcance=10;
-        this->AoE=1;
-        this->disparos=1;
-        this->movimiento[0]=1;
-        this->movimiento[1]=0;
-        this->movimiento[2]=1;
+        this->stats.alcance=10;
+        this->stats.AoE=1;
+        this->stats.disparos=1;
+        this->stats.movimiento[0]=1;
+        this->stats.movimiento[1]=0;
+        this->stats.movimiento[2]=1;
         break;
     
     default:
@@ -172,13 +172,13 @@ EstadoCarta_T carta::getState (){
 //---------------------------------------------------------------------------------------------------------------------
 
 int carta::getAoE(){
-    return this->AoE;
+    return this->stats.AoE;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
 int carta::getRange(){
-    return this->alcance;
+    return this->stats.alcance;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -191,4 +191,8 @@ carta* carta::getNext(){
 
 unsigned int* carta::getPos(){
     return this->posicion;
+}
+
+CardStats carta::getStats(){
+    return this->stats;
 }

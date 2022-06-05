@@ -5,15 +5,17 @@
 
 #include "tiposCarta.hpp"
 #include "estadoCarta.hpp"
+#include "cardStats.hpp"
 
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.0-------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                           DEFINICION DE LA CLASE CARTA
 //---------------------------------------------------------------------------------------------------------------------
+
 
 
 class carta
@@ -22,11 +24,8 @@ private:
     std::string propieario;
 
     TiposCarta_T tipo; // de que tipo es esta carta
+    CardStats stats; // stats de ataque y movimiento de la carta
     EstadoCarta_T estado; // si la carta esta en mano o en juego
-    int AoE; // area de efecto de la carta, esta en la notacion de todos los juegos
-    int alcance; // alcance del ataque
-    int disparos; // cantidad de disparos por turno que tiene la carta
-    int movimiento [3]; // distancia que se puede mover una carta en un turno en cada terreno. 0 tierra, 1 aire, 2 agua
 
     unsigned int posicion [3]; // posicion de la carta en el tablero
 
@@ -84,6 +83,10 @@ public:
     //pre:
     //pos: devuelve la posicion de la carta en el mapa
     unsigned int* getPos();
+
+    //pre:
+    //pos: devuelve las estadisticas de la carta
+    CardStats getStats();
     
 };
 
