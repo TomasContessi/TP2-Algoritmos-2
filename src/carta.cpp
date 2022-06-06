@@ -15,7 +15,7 @@
 
 carta::carta(std::string propietario,TiposCarta_T tipo)
 {
-    this->propieario=propieario;
+    this->propieario=propietario;
     this->setType(tipo);
 
     this->siguienteCarta=NULL;

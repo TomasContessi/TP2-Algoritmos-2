@@ -206,6 +206,7 @@ TiposCarta_T ronda::tomarCarta(TiposCarta_T tipo){
 void ronda::jugarCarta(unsigned int pos[3]){
     this->nuevaCarta->setPos(pos);
     this->jugadorEnTurno->agregarCarta(this->nuevaCarta);
+    this->nuevaCarta=NULL;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
