@@ -152,12 +152,14 @@ int ronda::contarJugadores(){
 
 void ronda::iniciarRonda(){
     this->jugadorEnTurno=this->jugadores;
+    this->tirarCarta();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
 void ronda::avanzarTurno(){
     this->jugadorEnTurno=this->jugadorEnTurno->getSig();
+    this->tirarCarta();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
