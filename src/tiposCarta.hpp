@@ -21,4 +21,6 @@ enum TiposCarta_T {
     soldado // el tipo de unidad por defecto
 };
 
+#define LAST_CARD_TYPE soldado
+
 #endif /* TIPOS_CARTA */

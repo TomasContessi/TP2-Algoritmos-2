@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <cstdlib>
 
 
 #include "carta.hpp"
@@ -15,32 +15,21 @@ using namespace std;
 
 
 int main(){
-    jugador* p1=new jugador("player_1");
-    carta* c1 = new carta(p1->getName(),misil);
-    unsigned int pos [] ={1,2,3};
-    CardStats st,st2;
 
-    c1->setPos(pos);
+    TiposCarta_T var;
+    srand(time(NULL));
 
-    p1->agregarCarta(c1);
+    for (int i = 0; i < 10; i++)
+    {
+        //cout<< rand() % 10<<endl;
+        var=TiposCarta_T (rand() % (LAST_CARD_TYPE + 1));
+        cout<<var<<endl;
+    }
 
-    c1 = new carta(p1->getName(),avion);
-    
-    unsigned int pos2 []={0,0,1};
-    c1->setPos(pos2);
-
-    p1->agregarCarta(c1);
-
-    st=p1->getCardStats(pos);
-    st2=p1->getCardStats(pos2);
-
-
-
-    st= c1->getStats();
-
-    st.alcance=27;
-
-    delete p1;
+    var=misil;
+    cout<<var<<endl;
+    var=LAST_CARD_TYPE;
+    cout<<var<<endl;
 
     return 0;
 }

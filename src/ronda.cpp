@@ -26,7 +26,7 @@ ronda::~ronda()
     {
         this->eliminarJugador(this->jugadores->getName()); // elimino al primer jugador de la lista
     }
-    
+    this->tirarCarta();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -79,11 +79,14 @@ void ronda::eliminarJugador(std::string nombre){
     aux2=this->jugadores;
     aux=aux2->getSig();
 
-    if (aux == this->jugadores) //si habia solo un jugador en la lista lo borro y pongo la lista a null
+    if (aux == this->jugadores) //si habia solo un jugador en la lista
     {
-        this->jugadores=NULL; 
-        delete aux;
-        this->iniciarRonda();
+        if (aux->getName() == nombre) // si el nombre concuerda lo borro
+        {
+            this->jugadores=NULL; 
+            delete aux;
+            this->iniciarRonda();
+        }
         return;
     }
     
@@ -173,5 +176,72 @@ std::string ronda::getJugadorEnTurno(){
 //---------------------------------------------------------------------------------------------------------------------
 
 TiposCarta_T ronda::tomarCarta(){
+    TiposCarta_T tipo;
 
+    srand(time(NULL)); // inicio una semilla aleatoria con la hora de mi maquina (hago esto porque sino siempre baraja igual)
+    tipo=TiposCarta_T (rand() % (LAST_CARD_TYPE + 1)); // genero aleatoriamente el tipo de carta que voy a sacar
+    return this->tomarCarta(tipo); // genero la carta y devuelvo su tipo
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T ronda::tomarCarta(TiposCarta_T tipo){
+    this->nuevaCarta = new carta(this->getJugadorEnTurno(),tipo);
+    return tipo;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::jugarCarta(unsigned int pos[3]){
+    this->nuevaCarta->setPos(pos);
+    this->jugadorEnTurno->agregarCarta(this->nuevaCarta);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::tirarCarta(std::string nombre,unsigned int pos[3]){
+    jugador* aux;
+
+    aux= this->jugadores;
+
+    if (aux->getSig() == aux)// si solo hay un jugador en la lista
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+        {
+            aux->retirarCarta(pos);
+        }
+        return;
+    }
+
+    while (aux->getSig() != this->jugadores)
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+        {
+            aux->retirarCarta(pos);
+            return;
+        }
+
+        aux=aux->getSig();
+
+        if (aux == NULL)
+        {
+            throw "error de continuidad de la lista";
+        }       
+    }  
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::tirarCarta(unsigned int pos[3]){
+    this->jugadorEnTurno->retirarCarta(pos);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::tirarCarta(){
+    if (this->nuevaCarta != NULL)
+    {
+        delete this->nuevaCarta;
+        this->nuevaCarta=NULL;
+    }
 }
