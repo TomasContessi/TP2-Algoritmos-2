@@ -133,6 +133,32 @@ CardStats jugador::getCardStats (unsigned int pos []){
 }
 
 //---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T jugador::getCardType (unsigned int pos []){
+    carta* aux;
+
+    if (this->cartas==NULL)
+    {
+        throw "no hay cartas";
+    }
+
+    aux=this->cartas;
+
+    while (aux->getNext() != NULL && compararPos(aux->getPos(),pos) != true) // voy buscando la carta en esa posicion hasta terminar el monton
+    {
+        aux=aux->getNext();
+    }
+
+    if (compararPos(aux->getPos(),pos))
+    {
+        return aux->getType();
+    }
+
+    throw "no hay cartas en esa posicion";
+    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
 //                                            METODOS DE SETEO DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 

@@ -247,3 +247,67 @@ void ronda::tirarCarta(){
         this->nuevaCarta=NULL;
     }
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::moverCarta(unsigned int posA[3] , unsigned int posB[3]){
+    TiposCarta_T tipo;
+
+    tipo = this->jugadorEnTurno->getCardType(posA);
+
+    this->tomarCarta(tipo);
+
+    this->jugadorEnTurno->retirarCarta(posA);
+    this->jugadorEnTurno->agregarCarta(this->nuevaCarta);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::contarCartas(std::string nombre,TiposCarta_T tipo){
+   jugador* aux;
+
+    aux= this->jugadores;
+
+    if (aux->getSig() == aux)// si solo hay un jugador en la lista
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que cuente las cartas
+        {
+            return int(aux->contarCartas(tipo));
+        }
+        return 0;
+    }
+
+    while (aux->getSig() != this->jugadores)
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que cuente las cartas
+        {
+            return int(aux->contarCartas(tipo));
+        }
+
+        aux=aux->getSig();
+
+        if (aux == NULL)
+        {
+            throw "error de continuidad de la lista";
+        }       
+    }  
+    return 0;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::contarCartas(TiposCarta_T tipo){
+    return int(this->jugadorEnTurno->contarCartas(tipo));
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+CardStats ronda::getCardStats(unsigned int pos[3]){
+    return this->jugadorEnTurno->getCardStats(pos);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T ronda::getCardType(unsigned int pos[3]){
+    return this->jugadorEnTurno->getCardType(pos);
+}
