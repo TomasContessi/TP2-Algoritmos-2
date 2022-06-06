@@ -7,44 +7,19 @@
 #include "jugador.hpp"
 #include "ronda.hpp"
 #include "casilla.hpp"
+#include "mapa.hpp"
 
 
 using namespace std;
 
 
 int main(){
-    ronda* rondita;
+    mapa* mapita;
+    std::vector<unsigned int> dim ={3,3,1};
 
-    unsigned int pos[3];
-    rondita= new ronda;
-    
-    rondita->agregarJugador(new jugador("player_1"));
-    rondita->agregarJugador(new jugador("player_2"));
-    rondita->agregarJugador(new jugador("player_3"));
+    mapita= new mapa(costa,dim);
 
-    rondita->iniciarRonda();
-
-    for (int i = 0; i < 8; i++)
-    {
-        pos[0]=i;
-        pos[1]=i;
-        pos[2]=i;
-
-        rondita->tomarCarta(TiposCarta_T (i));
-        rondita->jugarCarta(pos);
-        cout<<rondita->getJugadorEnTurno()<<endl;
-        cout<<rondita->getCardType(pos)<<endl;
-        rondita->avanzarTurno();
-    }
-
-    rondita->iniciarRonda();
-    pos[0]=0;
-    pos[1]=0;
-    pos[2]=0;
-
-    cout<<rondita->getCardType(pos)<<endl;
-    
-    delete rondita;
+    delete mapita;
 
     return 0;
 }

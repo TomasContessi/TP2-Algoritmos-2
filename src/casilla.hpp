@@ -2,6 +2,7 @@
 #define CASILLA_H
 
 #include <string>
+#include <vector>
 
 #include "casillaEstado.hpp"
 #include "casillaTipo.hpp"
@@ -19,7 +20,7 @@
 class casilla
 {
 private:
-    unsigned int posicionXYZ[3];
+    std::vector<unsigned int> posicionXYZ;
     CasillaEstado_T estado;
     std::string ocupante;
     CasillaTipo_T tipo;
@@ -48,7 +49,7 @@ public:
 
     //pre:
     //pos: devuelve la posicion de la casilla
-    unsigned int * getPos();
+    std::vector<unsigned int> getPos();
 
     //pre:
     //pos: devuelve un puntero a la casilla qde arriba (z+)

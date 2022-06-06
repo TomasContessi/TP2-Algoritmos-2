@@ -15,9 +15,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 
 casilla::casilla(CasillaTipo_T tipo){
-    this->posicionXYZ[0]=0;
-    this->posicionXYZ[1]=0;
-    this->posicionXYZ[2]=0;
+    this->posicionXYZ={0,0,0};
     this->estado=libre;
     this->setTipo(tipo);
     this->cSup=NULL;
@@ -80,7 +78,7 @@ bool casilla::verificarContinuidad(casilla* nueva,direccion_T dir){ // esta bien
 //                                            METODOS DE OBTENCION DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 
-unsigned int * casilla::getPos(){
+std::vector<unsigned int> casilla::getPos(){
     return this->posicionXYZ;
 }
 
@@ -189,7 +187,10 @@ void casilla::setSup(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1];
         this->posicionXYZ[2]=nueva->posicionXYZ[2]-1;
 
-        nueva->setInf(this);
+        if (nueva->getInf() != this)
+        {
+            nueva->setInf(this);
+        }
     }
     
 }
@@ -208,7 +209,10 @@ void casilla::setInf(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1];
         this->posicionXYZ[2]=nueva->posicionXYZ[2]+1;
 
-        nueva->setSup(this);
+        if (nueva->getSup() != this)
+        {
+            nueva->setSup(this);
+        }
     }
 }
 
@@ -226,7 +230,10 @@ void casilla::setN(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1]-1;
         this->posicionXYZ[2]=nueva->posicionXYZ[2];
 
-        nueva->setS(this);
+        if (nueva->getS() != this)
+        {
+            nueva->setS(this);
+        }
     }
 }
 
@@ -244,7 +251,10 @@ void casilla::setS(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1]+1;
         this->posicionXYZ[2]=nueva->posicionXYZ[2];
 
-        nueva->setN(this);
+        if (nueva->getN() != this)
+        {
+            nueva->setN(this);
+        }
     }
 }
 
@@ -262,7 +272,10 @@ void casilla::setE(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1];
         this->posicionXYZ[2]=nueva->posicionXYZ[2];
 
-        nueva->setW(this);
+        if (nueva->getW() != this)
+        {
+            nueva->setW(this);
+        }
     }
 }
 
@@ -280,7 +293,10 @@ void casilla::setW(casilla * nueva){
         this->posicionXYZ[1]=nueva->posicionXYZ[1];
         this->posicionXYZ[2]=nueva->posicionXYZ[2];
 
-        nueva->setE(this);
+        if (nueva->getE() != this)
+        {
+            nueva->setE(this);
+        }
     }
 }
 

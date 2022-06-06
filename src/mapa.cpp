@@ -14,20 +14,27 @@
 //                                              CONSTRUCTOR Y DESTRUCTOR
 //---------------------------------------------------------------------------------------------------------------------
 
-mapa::mapa(TipoMapa_T tipoMapa,unsigned int* dimension){
-    this->seed=new casilla(tierra); // creo la primera casilla
+mapa::mapa(TipoMapa_T tipoDeMapa,std::vector<unsigned int>  dimension){
+    CasillaTipo_T tipoDeCasilla;
+    std::vector<unsigned int>  pos={0,0,0};
+
+    this->tipoMapa=tipoDeMapa;
+
+    tipoDeCasilla=this->setCasillaType(tipoDeMapa,pos);
+
+    this->seed=new casilla(tipoDeCasilla); // creo la primera casilla
     this->iniciarCursor();
 
     // ahora creo un mapa de las dimensiones que me piden
-    for (int i = 0; i < dimension[0]; i++)
+    for (int i = 1; i < dimension[0]; i++)
     {
         this->xGrow();
     }
-    for (int i = 0; i < dimension[1]; i++)
+    for (int i = 1; i < dimension[1]; i++)
     {
         this->yGrow();
     }
-    for (int i = 0; i < dimension[2]; i++)
+    for (int i = 1; i < dimension[2]; i++)
     {
         this->zGrow();
     }
@@ -61,7 +68,7 @@ void mapa::xGrow(){
     
     do{ // hasta que llegue completamente al norte del mapa
         do{ // hasta que llegue completamente arriba en el mapa
-            unsigned int * nuevaPosicion = this->cursor->getPos();
+            std::vector<unsigned int>  nuevaPosicion = this->cursor->getPos();
             nuevaPosicion[0]++;
             nueva= new casilla(this->setCasillaType(this->tipoMapa,nuevaPosicion)); //creo una nueva casilla
             nueva->setW(this->cursor); //conecto la nueva casilla con el cursor al sur
@@ -76,17 +83,17 @@ void mapa::xGrow(){
                 nueva->setS(this->cursor->getS()->getE());// si tengo una capa al sur conecto la nueva con la que esta al sur
             }
 
-            this->avanzarCursorZ();// una vez conectada la nueva casilla avanzo 1 en z el cursor
-        }while(this->cursor->getSup()!=NULL);
+            // una vez conectada la nueva casilla avanzo 1 en z el cursor
+        }while(this->avanzarCursorZ());
 
-        this->avanzarCursorY();// una vez avanzado todo el cursor en z avanzo 1 en y
+        // una vez avanzado todo el cursor en z avanzo 1 en y
 
         while(this->cursor->getInf()!=NULL)
         {
             this->retrocederCursorZ(); // y devuelvo el carro a z=0
         }
 
-    }while (this->cursor->getN()!=NULL);
+    }while (this->avanzarCursorY());
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -103,7 +110,7 @@ void mapa::yGrow(){
     
     do{ // hasta que llegue completamente al este del mapa
         do{ // hasta que llegue completamente arriba en el mapa
-            unsigned int * nuevaPosicion = this->cursor->getPos();
+            std::vector<unsigned int>  nuevaPosicion = this->cursor->getPos();
             nuevaPosicion[1]++;
             nueva= new casilla(this->setCasillaType(this->tipoMapa,nuevaPosicion)); //creo una nueva casilla
             nueva->setS(this->cursor); //conecto la nueva casilla con el cursor al oeste
@@ -118,17 +125,17 @@ void mapa::yGrow(){
                 nueva->setW(this->cursor->getW()->getN());// si tengo una capa al oeste conecto la nueva con la que esta al oeste
             }
 
-            this->avanzarCursorZ();// una vez conectada la nueva casilla avanzo 1 en z el cursor
-        }while(this->cursor->getSup()!=NULL);
+            // una vez conectada la nueva casilla avanzo 1 en z el cursor
+        }while(this->avanzarCursorZ());
 
-        this->avanzarCursorX();// una vez avanzado todo el cursor en z avanzo 1 en x
+        // una vez avanzado todo el cursor en z avanzo 1 en x
 
         while(this->cursor->getInf()!=NULL)
         {
             this->retrocederCursorZ(); // y devuelvo el carro a z=0
         }
 
-    }while (this->cursor->getE()!=NULL);
+    }while (this->avanzarCursorX());
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -145,7 +152,7 @@ void mapa::zGrow(){
     
     do{ // hasta que llegue completamente al norte del mapa
         do{ // hasta que llegue completamente al este en el mapa
-            unsigned int * nuevaPosicion = this->cursor->getPos();
+            std::vector<unsigned int>  nuevaPosicion = this->cursor->getPos();
             nuevaPosicion[2]++;
             nueva= new casilla(this->setCasillaType(this->tipoMapa,nuevaPosicion)); //creo una nueva casilla
             nueva->setInf(this->cursor); //conecto la nueva casilla con el cursor al sur
@@ -160,22 +167,22 @@ void mapa::zGrow(){
                 nueva->setW(this->cursor->getW()->getSup());// si tengo una capa a la izquierda conecto la nueva con la que esta a la izquierda
             }
 
-            this->avanzarCursorX();// una vez conectada la nueva casilla avanzo 1 en x el cursor
-        }while(this->cursor->getE()!=NULL);
+            // una vez conectada la nueva casilla avanzo 1 en x el cursor
+        }while(this->avanzarCursorX());
 
-        this->avanzarCursorY();// una vez avanzado todo el cursor en z avanzo 1 en y
+        // una vez avanzado todo el cursor en z avanzo 1 en y
 
         while(this->cursor->getInf()!=NULL)
         {
             this->retrocederCursorX(); // y devuelvo el carro a x=0
         }
 
-    }while (this->cursor->getN()!=NULL);
+    }while (this->avanzarCursorY());
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, unsigned int * posicion){
+CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, std::vector<unsigned int> posicion){
 
     if (this->verificarCasilla(posicion) == false)
     {
@@ -252,7 +259,7 @@ CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, unsigned int * posicion){
         break;
     
     default:
-        return tierra;
+        throw "tipo de mapa invalido";
 
         break;
     }
@@ -284,7 +291,7 @@ void mapa::zDecay(){
         {
             this->retrocederCursorY();
 
-            this->cursor->getN()->~casilla(); // borro la casilla al norte del cursor
+            delete this->cursor->getN(); // borro la casilla al norte del cursor
         }
 
         this->retrocederCursorX();
@@ -297,15 +304,26 @@ void mapa::zDecay(){
         }
     }
 
-    delete this->cursor; // por ultimo mato la ultima casilla del nivel
+    while (this->cursor->getS() != NULL)
+     {
+        this->retrocederCursorY();
+
+        delete this->cursor->getN(); // borro la casilla al norte del cursor
+    }
+
+    if (cursor==seed)
+    {
+        seed=NULL;
+    }
     
+    delete this->cursor; // por ultimo mato la ultima casilla del nivel  
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                          METODOS DE MODIFICACION DE CASILLAS
 //---------------------------------------------------------------------------------------------------------------------
 
-void mapa::attackCasilla(unsigned int pos [3]){
+void mapa::attackCasilla(std::vector<unsigned int> pos){
     this->jumpCursor(pos);
 
     this->cursor->setOcupante("");
@@ -321,7 +339,7 @@ void mapa::attackCasilla(unsigned int pos [3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void mapa::leaveCasilla(unsigned int pos [3]){
+void mapa::leaveCasilla(std::vector<unsigned int> pos){
     this->jumpCursor(pos);
 
     this->cursor->setEstado(libre,"");
@@ -329,7 +347,7 @@ void mapa::leaveCasilla(unsigned int pos [3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void mapa::takeCasilla(unsigned int pos [3],std::string nombre){
+void mapa::takeCasilla(std::vector<unsigned int> pos,std::string nombre){
     if (nombre == "")
     {
         throw "nombre nulo";
@@ -361,14 +379,14 @@ void mapa::takeCasilla(unsigned int pos [3],std::string nombre){
 //                                          METODOS DE OBTENCION DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 
-CasillaEstado_T mapa::getStateCasilla(unsigned int pos[3]){
+CasillaEstado_T mapa::getStateCasilla(std::vector<unsigned int> pos){
     this->jumpCursor(pos);
     return this->cursor->getEstado();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-CasillaTipo_T mapa::getTypeCasilla(unsigned int pos[3]){
+CasillaTipo_T mapa::getTypeCasilla(std::vector<unsigned int> pos){
     this->jumpCursor(pos);
     return this->cursor->getTipo();
 }
@@ -377,13 +395,13 @@ CasillaTipo_T mapa::getTypeCasilla(unsigned int pos[3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-std::string mapa::getPropietario(unsigned int pos [3]){
+std::string mapa::getPropietario(std::vector<unsigned int> pos){
     this->jumpCursor(pos);
     return this->cursor->getOcupante();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
-unsigned int * mapa::getCursor(){
+std::vector<unsigned int> mapa::getCursor(){
     return this->cursor->getPos();
 }
 
@@ -505,7 +523,7 @@ bool mapa::stepCursor(direccion_T dir){
 //---------------------------------------------------------------------------------------------------------------------
 
 
-void mapa::jumpCursor(unsigned int pos[]){
+void mapa::jumpCursor(std::vector<unsigned int> pos){
     if (this->verificarCasilla(pos) == false)
     {
         throw "posicion invalida";
@@ -533,7 +551,7 @@ void mapa::jumpCursor(unsigned int pos[]){
 //                                              METODOS DE UTILIDADES
 //---------------------------------------------------------------------------------------------------------------------
 
-bool mapa::verificarCasilla(unsigned int pos []){
+bool mapa::verificarCasilla(std::vector<unsigned int> pos){
     if (pos[0]>this->dimensionXYZ[0])
     {
         return false;

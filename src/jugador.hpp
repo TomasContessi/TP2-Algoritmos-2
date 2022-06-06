@@ -2,6 +2,7 @@
 #define JUGADOR_H
 
 #include <string>
+#include <vector>
 
 #include "estadoJugador.hpp"
 #include "carta.hpp"
