@@ -10,7 +10,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                           DEFINICION DE LA CLASE CASILLA
 //---------------------------------------------------------------------------------------------------------------------
@@ -75,12 +75,16 @@ public:
     casilla * getW();
 
     //pre:
+    //pos:  devuelve el vecino en la direccion indicada
+    casilla * getNeighbor(direccion_T);
+
+    //pre:
     //pos: devuelve el estado de la casilla
     CasillaEstado_T getEstado();
 
     //pre:
     //pos: devuelve el tipo de casilla
-    CasillaTipo_T getTippo();
+    CasillaTipo_T getTipo();
 
     //pre:
     //pos:
@@ -109,6 +113,10 @@ public:
     //pre: que la casilla nueva exista y su posicion sea concordante con las otras casillas limitrofes
     //pos: asigna la nueva casilla a la izquierda de la actual y modifica la posicion de la casilla actual para queda a la derecha de la nueva
     void setW (casilla *);
+
+    //pre: que la casilla nueva exista y su posicion sea concordante con las otras casillas limitrofes
+    //pos: asigna la nueva casilla en la direccion indicada respecto de la actual y modifica la posicion de la casilla actual para acomodarse a la nueva
+    void  setNeighbor(casilla *,direccion_T);
 
     //pre: 
     //pos: asigna un estado a la casilla actual y en el caso de estar ocupada le asigna el card

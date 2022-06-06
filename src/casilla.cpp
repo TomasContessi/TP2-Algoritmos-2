@@ -4,6 +4,7 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 //                                              METODOS DE LA CLASE CASILLA
 //---------------------------------------------------------------------------------------------------------------------
@@ -121,13 +122,48 @@ casilla * casilla::getW(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
+casilla * casilla::getNeighbor(direccion_T dir){
+    switch (dir)
+    {
+    case Sup:
+        return this->getSup();
+        break;
+
+    case Inf:
+        return this->getInf();
+        break;
+
+    case N:
+        return this->getN();
+        break;
+
+    case S:
+        return this->getS();
+        break;
+
+    case E:
+        return this->getE();
+        break;
+
+    case W:
+        return this->getW();
+        break;
+    
+    default:
+    throw "direccion invalida";
+        break;
+    }
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
 CasillaEstado_T casilla::getEstado(){
     return this->estado;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-CasillaTipo_T casilla::getTippo(){
+CasillaTipo_T casilla::getTipo(){
     return this->tipo;
 }
 
@@ -245,6 +281,41 @@ void casilla::setW(casilla * nueva){
         this->posicionXYZ[2]=nueva->posicionXYZ[2];
 
         nueva->setE(this);
+    }
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void  casilla::setNeighbor(casilla * nueva,direccion_T dir){
+    switch (dir)
+    {
+    case Sup:
+        this->setSup(nueva);
+        break;
+
+    case Inf:
+        this->setInf(nueva);
+        break;
+
+    case N:
+        this->setN(nueva);
+        break;
+
+    case S:
+        this->setS(nueva);
+        break;
+
+    case E:
+        this->setE(nueva);
+        break;
+
+    case W:
+        this->setW(nueva);
+        break;
+    
+    default:
+    throw "direccion invalida";
+        break;
     }
 }
 

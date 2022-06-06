@@ -6,6 +6,7 @@
 #include "carta.hpp"
 #include "jugador.hpp"
 #include "ronda.hpp"
+#include "casilla.hpp"
 
 
 using namespace std;
