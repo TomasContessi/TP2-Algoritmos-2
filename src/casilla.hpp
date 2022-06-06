@@ -121,6 +121,10 @@ public:
     //pre: 
     //pos: asigna un estado a la casilla actual y en el caso de estar ocupada le asigna el card
     void setEstado (CasillaEstado_T,std::string);
+
+    //pre:
+    //pos:
+    void setOcupante (std::string);
 };
 
 

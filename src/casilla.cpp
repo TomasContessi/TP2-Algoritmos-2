@@ -335,3 +335,6 @@ void casilla::setEstado(CasillaEstado_T estado,std::string nombre){
 
 //---------------------------------------------------------------------------------------------------------------------
 
+void casilla::setOcupante (std::string nombre){
+    this->ocupante=nombre;
+}
