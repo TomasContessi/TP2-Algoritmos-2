@@ -110,6 +110,15 @@ void ronda::eliminarJugador(std::string nombre){
         }
               
     }
+
+    if (aux->getName() == nombre) // si er el primero de la lista
+    {
+        aux2->setSiguiente(aux->getSig()); // saco al jugador con ese nombre
+        this->jugadores=aux->getSig();
+        delete aux;
+        this->iniciarRonda();
+        return;
+    }
     
 }
 

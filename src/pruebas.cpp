@@ -5,6 +5,7 @@
 
 #include "carta.hpp"
 #include "jugador.hpp"
+#include "ronda.hpp"
 
 // para facilitar el debuggeo, pero despues se sacan y se compila solo el directorio
 //#include "carta.cpp"
@@ -15,21 +16,23 @@ using namespace std;
 
 
 int main(){
+    ronda* rondita;
 
-    TiposCarta_T var;
-    srand(time(NULL));
+    rondita= new ronda;
+    
+    rondita->agregarJugador(new jugador("player_1"));
+    rondita->agregarJugador(new jugador("player_2"));
+    rondita->agregarJugador(new jugador("player_3"));
 
-    for (int i = 0; i < 10; i++)
+    rondita->iniciarRonda();
+
+    for (int i = 0; i < 4; i++)
     {
-        //cout<< rand() % 10<<endl;
-        var=TiposCarta_T (rand() % (LAST_CARD_TYPE + 1));
-        cout<<var<<endl;
+        cout<<rondita->getJugadorEnTurno()<<endl;
+        rondita->avanzarTurno();
     }
-
-    var=misil;
-    cout<<var<<endl;
-    var=LAST_CARD_TYPE;
-    cout<<var<<endl;
+    
+    delete rondita;
 
     return 0;
 }
