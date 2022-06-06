@@ -7,10 +7,6 @@
 #include "jugador.hpp"
 #include "ronda.hpp"
 
-// para facilitar el debuggeo, pero despues se sacan y se compila solo el directorio
-//#include "carta.cpp"
-//#include "jugador.cpp"
-
 
 using namespace std;
 
@@ -27,7 +23,7 @@ int main(){
 
     rondita->iniciarRonda();
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 8; i++)
     {
         pos[0]=i;
         pos[1]=i;
