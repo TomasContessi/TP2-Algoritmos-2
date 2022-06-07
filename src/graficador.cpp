@@ -69,8 +69,9 @@ void graficador::construirTablero(){
             if (estado==destruida)
             {
                 RangedPixelToPixelCopy( graficas.landDestroyed, 0,graficas.landDestroyed.TellWidth()-1,graficas.landDestroyed.TellHeight()-1 , 0, imagen, 0, 0); 
-            }
+            }else{
                 RangedPixelToPixelCopy( graficas.land, 0,graficas.land.TellWidth()-1,graficas.land.TellHeight()-1 , 0, imagen, 0, 0); 
+            }
             break;
 
             case mar:
@@ -99,7 +100,102 @@ void graficador::construirTablero(){
 //---------------------------------------------------------------------------------------------------------------------
 
 void graficador::agregarCartas(){
+    int res;
+    int dimX;
+    int dimY;
+    BMP imagen;
+    TiposCarta_T tipo;
+    CasillaEstado_T estado;
+    std::string ocupante;
 
+    RGBApixel transparencia;
+    transparencia.Red=255;
+    transparencia.Green=255;
+    transparencia.Blue=255;
+
+    bool graficar; // flag que me dice si tengo o no que graficar en una casilla
+
+    res=this->graficas.air.TellHeight(); // uso la dimension de las casillas
+
+    
+    dimX=this->mapita->getDim().data()[0];
+    dimY=this->mapita->getDim().data()[1];
+    
+
+    imagen.SetSize(res,res);
+
+    this->mapita->iniciarCursor();
+
+    do // para toda la dimension x
+    {   
+        do // para toda la dimension y
+        {
+            estado=this->mapita->getStateCasilla(this->mapita->getCursor()); // me fijo el estado de la casilla
+
+            if (estado == ocupada)
+            {
+                ocupante=this->mapita->getPropietario(this->mapita->getCursor()); // busco su pcupante
+
+                if (observador==ocupante || observador == "") // si el ocupante es quien mira, o quien mira tiene un zeppelin
+                {
+                    tipo=this->rondita->getCardType(ocupante,this->mapita->getCursor().data()); // en ese lugar voy a graficar el tipo de carta
+
+                    // cargo la imagen que voy a graficar, de vuelta el selector que habia pensado no anda
+                    graficar=true;
+                    switch (tipo)
+                    {
+                    case misil:
+                        RangedPixelToPixelCopy( graficas.misil, 0,graficas.misil.TellWidth()-1,graficas.misil.TellHeight()-1 , 0, imagen, 0, 0); 
+                        break;
+
+                    case avion:
+                        RangedPixelToPixelCopy( graficas.avion, 0,graficas.avion.TellWidth()-1,graficas.avion.TellHeight()-1 , 0, imagen, 0, 0);  
+                        break;
+
+                    case barco:
+                        RangedPixelToPixelCopy( graficas.barco, 0,graficas.barco.TellWidth()-1,graficas.barco.TellHeight()-1 , 0, imagen, 0, 0); 
+                        break;
+
+                    case bomba_atomica:
+                        RangedPixelToPixelCopy( graficas.bomba, 0,graficas.bomba.TellWidth()-1,graficas.bomba.TellHeight()-1 , 0, imagen, 0, 0); 
+                        break;
+                    case dirigible:
+                        RangedPixelToPixelCopy( graficas.dirigible, 0,graficas.dirigible.TellWidth()-1,graficas.dirigible.TellHeight()-1 , 0, imagen, 0, 0); 
+                        break;
+                    case soldado:
+                        RangedPixelToPixelCopy( graficas.soldado, 0,graficas.soldado.TellWidth()-1,graficas.soldado.TellHeight()-1 , 0, imagen, 0, 0); 
+                        break;
+    
+                    default:
+                        graficar=false;
+                        break;
+                    }
+
+                    if (ocupante != observador)
+                    {
+                        RangedPixelToPixelCopyTransparent(graficas.enemyGrid, 0,graficas.enemyGrid.TellWidth()-1,graficas.enemyGrid.TellHeight()-1 , 0, imagen, 0, 0, transparencia);
+                    }else{
+                        RangedPixelToPixelCopyTransparent(graficas.allyGrid, 0,graficas.allyGrid.TellWidth()-1,graficas.allyGrid.TellHeight()-1 , 0, imagen, 0, 0, transparencia);                       
+                    }                    
+                }                
+            }
+            // con todo eso genere la imagen que va a ir en la casilla, ahora reviso el flag y la grafico
+
+            if (graficar==true)
+            {
+                //imagen.WriteToFile("tst.bmp");
+                dimX=this->mapita->getCursor().data()[0];
+                dimY=this->mapita->getCursor().data()[1];
+
+                //en el comando kilometrico de abajo pego la imagen en el lugar del tablero de la casilla apuntada por el cursor
+                RangedPixelToPixelCopyTransparent( imagen, 0,imagen.TellWidth()-1,imagen.TellHeight()-1 , 0, this->tablero, int(dimX*res), int(dimY*res), transparencia);
+                graficar=false;
+            }
+                        
+            //ahora avanzo el cursor
+        }while(this->mapita->avanzarCursorY());      
+        while (this->mapita->retrocederCursorY()){}
+    }while(this->mapita->avanzarCursorX());
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -107,9 +203,11 @@ void graficador::agregarCartas(){
 void graficador::agregarFondo(){// voy a hardcodear feo esto para tener ya una visualizacion
     this->pantalla.SetSize(this->tablero.TellWidth(),this->tablero.TellHeight());
     RangedPixelToPixelCopy( this->tablero, 0,this->tablero.TellWidth()-1,this->tablero.TellHeight()-1 , 0, this->pantalla, 0, 0);
+    Rescale(this->pantalla,'H',800);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
+// no anda por alguna razon que desconozco
 
 void graficador::imgSelector(BMP imagen, CasillaTipo_T tipo,CasillaEstado_T estado){
     switch (tipo)
@@ -155,32 +253,74 @@ void graficador::selecRutaSalida(std::string ruta){
 //---------------------------------------------------------------------------------------------------------------------
 
 void graficador::cargarGraficas(){
-    std::string nombre;
+    // cargo los nombres de las imagenes
+    std::vector<std::string> nombre={"land.bmp",
+                                    "sky.bmp",
+                                    "water.bmp",
+                                    "destroyed_land.bmp",
+                                    "misil.bmp",
+                                    "plane.bmp",
+                                    "ship.bmp",
+                                    "bomb.bmp",
+                                    "zeppelin.bmp",
+                                    "cursed_troop.bmp",
+                                    "ally_grid.bmp",
+                                    "enemy_grill.bmp",
+                                    };
     std::string ruta;
 
-    nombre="sky.bmp";
-    ruta=this->rutaGraficas;
-    ruta+=nombre;
-    
-    this->graficas.air.ReadFromFile(ruta.c_str());
+    for (int i = 0; i < nombre.size(); i++)
+    {
+        ruta=this->rutaGraficas;
+        ruta+=nombre[i];
 
-    nombre="land.bmp";
-    ruta=this->rutaGraficas;
-    ruta+=nombre;
-    
-    this->graficas.land.ReadFromFile(ruta.c_str());
+        switch (i) // creia que las estructuras se podian acceder secuencialmente como en matlab, pero nope
+        {
 
-    nombre="water.bmp";
-    ruta=this->rutaGraficas;
-    ruta+=nombre;
-    
-    this->graficas.water.ReadFromFile(ruta.c_str());
+        case 0:
+            this->graficas.land.ReadFromFile(ruta.c_str());
+            break;
+        case 1:
+            this->graficas.air.ReadFromFile(ruta.c_str());
+            break;
+        case 2:
+            this->graficas.water.ReadFromFile(ruta.c_str());
+            break;
+        case 3:
+            this->graficas.landDestroyed.ReadFromFile(ruta.c_str());
+            break;
+        case 4:
+            this->graficas.misil.ReadFromFile(ruta.c_str());
+            break;
+        case 5:
+            this->graficas.avion.ReadFromFile(ruta.c_str());
+            break;
+        case 6:
+            this->graficas.barco.ReadFromFile(ruta.c_str());
+            break;
+        case 7:
+            this->graficas.bomba.ReadFromFile(ruta.c_str());
+            break;
+        case 8:
+            this->graficas.dirigible.ReadFromFile(ruta.c_str());
+            break;
+        case 9:
+            this->graficas.soldado.ReadFromFile(ruta.c_str());
+            break;
+        case 10:
+            this->graficas.allyGrid.ReadFromFile(ruta.c_str());
+            break;
+        case 11:
+            this->graficas.enemyGrid.ReadFromFile(ruta.c_str());
+            break;
 
-    nombre="destroyed_land.bmp";
-    ruta=this->rutaGraficas;
-    ruta+=nombre;
+        default:
+
+        throw "caso invalido, posiblemente conte mal";
+            break;
+        }
+    }
     
-    this->graficas.landDestroyed.ReadFromFile(ruta.c_str());
 }
 
 //---------------------------------------------------------------------------------------------------------------------

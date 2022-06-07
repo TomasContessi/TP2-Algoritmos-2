@@ -43,6 +43,37 @@ int main(){
 */
     cout<<"starting..."<<endl;
     mapita= new mapa(rio,dim);
+    rondita= new ronda;
+    std::vector<unsigned int> pos = {0,0,0};
+
+    jugador* player= new jugador ("player_1");
+
+    rondita->agregarJugador(player);
+    player= new jugador ("player_2");
+
+    rondita->agregarJugador(player);
+
+    rondita->iniciarRonda();
+
+    for (int i = 0; i < 20; i++)
+    {
+        pos[0]++;
+        pos[1]++;
+        rondita->tomarCarta(soldado);
+        rondita->jugarCarta(pos.data());
+        mapita->takeCasilla(pos,rondita->getJugadorEnTurno());
+        rondita->avanzarTurno();
+    }
+
+    pos[0]=0;
+    for (int i = 0; i < 20; i++)
+    {
+        pos[0]++;
+        pos[1]--;
+        mapita->attackCasilla(pos);
+    }
+    
+    
 
     graficador* printer= new graficador(mapita,rondita);
 
@@ -50,7 +81,8 @@ int main(){
     printer->cargarGraficas();
     printer->selecRutaSalida("../tableros/");
 
-    printer->graficarPantalla("tst");
+    printer->graficarPantalla("player_1");
+    printer->graficarPantalla("player_2");
 
     delete printer;
     delete mapita;

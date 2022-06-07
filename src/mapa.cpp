@@ -331,10 +331,10 @@ void mapa::attackCasilla(std::vector<unsigned int> pos){
 
     if(this->cursor->getTipo() == tierra)
     {
-        this->cursor->setEstado(destruida,NULL);
+        this->cursor->setEstado(destruida,"");
     }else
     {
-        this->cursor->setEstado(libre,NULL);
+        this->cursor->setEstado(libre,"");
     }
 }
 

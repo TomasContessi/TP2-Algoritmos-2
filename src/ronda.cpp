@@ -321,3 +321,43 @@ CardStats ronda::getCardStats(unsigned int pos[3]){
 TiposCarta_T ronda::getCardType(unsigned int pos[3]){
     return this->jugadorEnTurno->getCardType(pos);
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T ronda::getCardType(std::string nombre,unsigned int pos[3]){
+    jugador* aux;
+    TiposCarta_T tipo;
+
+    aux=this->jugadorEnTurno;
+
+    if (this->jugadorEnTurno->getSig() == this->jugadorEnTurno)
+    {
+        if (this->getJugadorEnTurno() == nombre)
+        {
+            return this->getCardType(pos);
+        } 
+
+        throw "no hay un jugador con ese nombre";
+    }
+    
+
+    while (this->jugadorEnTurno->getSig() != this->jugadorEnTurno)
+    {
+        if (this->getJugadorEnTurno() == nombre)
+        {
+            tipo=this->getCardType(pos);
+            this->jugadorEnTurno=aux;
+            return tipo;
+        }       
+        this->avanzarTurno(); 
+    }
+
+    if (this->getJugadorEnTurno() == nombre)
+    {
+        tipo=this->getCardType(pos);
+        this->jugadorEnTurno=aux;
+        return tipo;
+    } 
+    
+    throw "no hay un jugador con ese nombre";
+}

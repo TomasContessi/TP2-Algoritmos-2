@@ -1,6 +1,8 @@
 #ifndef GRAFICADOR_H
 #define GRAFICADOR_H
 
+#include <vector>
+
 #include "EasyBMP.h"
 
 #include "mapa.hpp"
