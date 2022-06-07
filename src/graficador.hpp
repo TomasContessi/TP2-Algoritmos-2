@@ -18,6 +18,8 @@
 class graficador
 {
 private:
+
+public:
     BMP tablero;
     BMP pantalla;
     graficas_t graficas;
@@ -47,7 +49,13 @@ private:
     //pos: le agrega las cartas y el fondo al tablero y lo guarda en pantalla
     void contruirPantalla();
 
-public:
+    //pre:
+    //pos:
+    BMP imgSelector(CasillaTipo_T,CasillaEstado_T);
+
+    //pre:
+    //pos:
+    BMP imgSelector(TiposCarta_T);
 
     //pre:
     //pos: crea un objeto graficador
@@ -74,14 +82,6 @@ public:
     void cargarGraficas();
 
 };
-
-graficador::graficador(mapa*,ronda*)
-{
-}
-
-graficador::~graficador()
-{
-}
 
 
 #endif /* GRAFICADOR_H */

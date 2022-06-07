@@ -20,7 +20,7 @@ class mapa
 private:
     casilla *seed;
     casilla *cursor;
-    unsigned int dimensionXYZ[3];
+    std::vector<unsigned int> dimensionXYZ;
     TipoMapa_T tipoMapa;
 
 
@@ -120,6 +120,10 @@ public:
     //pre:
     //pos:
     std::vector<unsigned int> getCursor();
+
+    //pre:
+    //pos:
+    std::vector<unsigned int> getDim();
     
 };
 

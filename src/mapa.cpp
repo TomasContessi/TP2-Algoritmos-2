@@ -19,6 +19,7 @@ mapa::mapa(TipoMapa_T tipoDeMapa,std::vector<unsigned int>  dimension){
     std::vector<unsigned int>  pos={0,0,0};
 
     this->tipoMapa=tipoDeMapa;
+    this->dimensionXYZ=dimension;
 
     tipoDeCasilla=this->setCasillaType(tipoDeMapa,pos);
 
@@ -566,4 +567,10 @@ bool mapa::verificarCasilla(std::vector<unsigned int> pos){
     }    
 
     return true;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+std::vector<unsigned int> mapa::getDim(){
+    return this->dimensionXYZ;
 }
