@@ -37,6 +37,7 @@ void graficador::construirTablero(){
     int dimX;
     int dimY;
     BMP imagen;
+    BMP img2;
     CasillaTipo_T tipo;
     CasillaEstado_T estado;
 
@@ -46,7 +47,7 @@ void graficador::construirTablero(){
 
     dimX=this->mapita->getDim().data()[0];
     dimY=this->mapita->getDim().data()[1];
-    tablero.SetSize(dimX*res,dimY*res); //seteo las dimensiones del tablero
+    this->tablero.SetSize(int(dimX*res),int(dimY*res)); //seteo las dimensiones del tablero
 
     this->mapita->iniciarCursor();
 
@@ -56,7 +57,7 @@ void graficador::construirTablero(){
         {
             tipo=this->mapita->getTypeCasilla(this->mapita->getCursor());
             estado=this->mapita->getStateCasilla(this->mapita->getCursor());
-            imagen=this->imgSelector(tipo,estado);
+            imagen.ReadFromFile("../graphics_20/sky.bmp");
 
             dimX=this->mapita->getCursor().data()[0];
             dimY=this->mapita->getCursor().data()[1];
@@ -66,7 +67,9 @@ void graficador::construirTablero(){
 
             //ahora avanzo el cursor
         }while(this->mapita->avanzarCursorY());      
+        while (this->mapita->retrocederCursorY()){}
     }while(this->mapita->avanzarCursorX());
+    
 }
 
 //---------------------------------------------------------------------------------------------------------------------
