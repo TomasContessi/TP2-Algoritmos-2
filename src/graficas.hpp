@@ -18,14 +18,14 @@ struct graficas_t
     BMP water;
     BMP landDestroyed;
 
-    BMP misil;
+    /*BMP misil;
     BMP avion;
     BMP barco;
     BMP bomba;
     BMP dirigible;
     BMP soldado;
 
-    BMP fondo;
+    BMP fondo;*/
 };
 
 

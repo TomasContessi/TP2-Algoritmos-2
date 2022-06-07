@@ -37,7 +37,6 @@ void graficador::construirTablero(){
     int dimX;
     int dimY;
     BMP imagen;
-    BMP img2;
     CasillaTipo_T tipo;
     CasillaEstado_T estado;
 
@@ -48,6 +47,7 @@ void graficador::construirTablero(){
     dimX=this->mapita->getDim().data()[0];
     dimY=this->mapita->getDim().data()[1];
     this->tablero.SetSize(int(dimX*res),int(dimY*res)); //seteo las dimensiones del tablero
+    imagen.SetSize(res,res);
 
     this->mapita->iniciarCursor();
 
@@ -57,7 +57,31 @@ void graficador::construirTablero(){
         {
             tipo=this->mapita->getTypeCasilla(this->mapita->getCursor());
             estado=this->mapita->getStateCasilla(this->mapita->getCursor());
-            imagen.ReadFromFile("../graphics_20/sky.bmp");
+            //imagen.ReadFromFile("../graphics_20/sky.bmp");
+
+            switch (tipo)
+            {
+            case aire:
+                RangedPixelToPixelCopy( graficas.air, 0,graficas.air.TellWidth()-1,graficas.air.TellHeight()-1 , 0, imagen, 0, 0); 
+                break;
+
+            case tierra:
+            if (estado==destruida)
+            {
+                RangedPixelToPixelCopy( graficas.landDestroyed, 0,graficas.landDestroyed.TellWidth()-1,graficas.landDestroyed.TellHeight()-1 , 0, imagen, 0, 0); 
+            }
+                RangedPixelToPixelCopy( graficas.land, 0,graficas.land.TellWidth()-1,graficas.land.TellHeight()-1 , 0, imagen, 0, 0); 
+            break;
+
+            case mar:
+                RangedPixelToPixelCopy( graficas.water, 0,graficas.water.TellWidth()-1,graficas.water.TellHeight()-1 , 0, imagen, 0, 0); 
+                break;
+    
+            default:
+
+            throw "thipo no valido";
+                break;
+            }
 
             dimX=this->mapita->getCursor().data()[0];
             dimY=this->mapita->getCursor().data()[1];
@@ -81,28 +105,29 @@ void graficador::agregarCartas(){
 //---------------------------------------------------------------------------------------------------------------------
 
 void graficador::agregarFondo(){// voy a hardcodear feo esto para tener ya una visualizacion
-    this->pantalla=this->tablero;
+    this->pantalla.SetSize(this->tablero.TellWidth(),this->tablero.TellHeight());
+    RangedPixelToPixelCopy( this->tablero, 0,this->tablero.TellWidth()-1,this->tablero.TellHeight()-1 , 0, this->pantalla, 0, 0);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-BMP graficador::imgSelector(CasillaTipo_T tipo,CasillaEstado_T estado){
+void graficador::imgSelector(BMP imagen, CasillaTipo_T tipo,CasillaEstado_T estado){
     switch (tipo)
     {
     case aire:
-        return this->graficas.air;
+        RangedPixelToPixelCopy( graficas.air, 0,graficas.air.TellWidth()-1,graficas.air.TellHeight()-1 , 0, imagen, 0, 0); 
         break;
 
     case tierra:
         if (estado==destruida)
         {
-            return this->graficas.landDestroyed;
+            RangedPixelToPixelCopy( graficas.landDestroyed, 0,graficas.landDestroyed.TellWidth()-1,graficas.landDestroyed.TellHeight()-1 , 0, imagen, 0, 0); 
         }
-        return this->graficas.land;
+        RangedPixelToPixelCopy( graficas.land, 0,graficas.land.TellWidth()-1,graficas.land.TellHeight()-1 , 0, imagen, 0, 0); 
         break;
 
     case mar:
-        return this->graficas.water;
+        RangedPixelToPixelCopy( graficas.water, 0,graficas.water.TellWidth()-1,graficas.water.TellHeight()-1 , 0, imagen, 0, 0); 
         break;
     
     default:

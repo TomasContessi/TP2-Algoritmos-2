@@ -19,7 +19,7 @@ int main(){
     mapa* mapita;
     ronda* rondita;
 
-    std::vector<unsigned int> dim ={9,20,1};
+    std::vector<unsigned int> dim ={21,21,1};
     BMP tablero;
 /*
     BMP tierra;
@@ -41,8 +41,8 @@ int main(){
     Rescale(tablero,'H',400);
     tablero.WriteToFile("../tableros/tablero_tst.bmp");
 */
-
-    mapita= new mapa(costa,dim);
+    cout<<"starting..."<<endl;
+    mapita= new mapa(rio,dim);
 
     graficador* printer= new graficador(mapita,rondita);
 
@@ -52,9 +52,11 @@ int main(){
 
     printer->graficarPantalla("tst");
 
-
-    delete mapita;
     delete printer;
+    delete mapita;
+
+    cout<<"finish"<<endl;
+    
 
     return 0;
 }

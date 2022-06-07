@@ -51,7 +51,7 @@ public:
 
     //pre:
     //pos:
-    BMP imgSelector(CasillaTipo_T,CasillaEstado_T);
+    void imgSelector(BMP,CasillaTipo_T,CasillaEstado_T);
 
     //pre:
     //pos:

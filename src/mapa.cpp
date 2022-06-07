@@ -199,7 +199,7 @@ CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, std::vector<unsigned int> po
             return tierra;
         }
 
-        if (posicion[1]<1 && posicion[0] >= this->dimensionXYZ[0]/2)
+        if (posicion[2]<1 && posicion[0] >= this->dimensionXYZ[0]/2)
         {
             return mar;
         }
@@ -214,9 +214,9 @@ CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, std::vector<unsigned int> po
             return aire;
         }
         
-        if (posicion[1] > this->dimensionXYZ[1]/3 && posicion[0] > this->dimensionXYZ[0]/3)
+        if (posicion[1] >= this->dimensionXYZ[1]/3 && posicion[0] >= this->dimensionXYZ[0]/3)
         {
-            if (posicion[1] <= 2*(this->dimensionXYZ[1])/3 && posicion[0] <= 2*(this->dimensionXYZ[0])/3)
+            if (posicion[1] < 2*(this->dimensionXYZ[1])/3 && posicion[0] < 2*(this->dimensionXYZ[0])/3)
             {
               return tierra;
             }
@@ -232,9 +232,9 @@ CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, std::vector<unsigned int> po
             return aire;
         }
         
-        if (posicion[1] > this->dimensionXYZ[1]/3 && posicion[0] > this->dimensionXYZ[0]/3)
+        if (posicion[1] >= this->dimensionXYZ[1]/3 && posicion[0] >= this->dimensionXYZ[0]/3)
         {
-            if (posicion[1] <= 2*(this->dimensionXYZ[1])/3 && posicion[0] <= 2*(this->dimensionXYZ[0])/3)
+            if (posicion[1] < 2*(this->dimensionXYZ[1])/3 && posicion[0] < 2*(this->dimensionXYZ[0])/3)
             {
               return mar;
             }
@@ -250,7 +250,7 @@ CasillaTipo_T mapa::setCasillaType(TipoMapa_T tipo, std::vector<unsigned int> po
             return aire;
         }
         
-        if (posicion[1] > this->dimensionXYZ[1]/3 && posicion[1] <= 2*(this->dimensionXYZ[1])/3)
+        if (posicion[1] >= this->dimensionXYZ[1]/3 && posicion[1] < 2*(this->dimensionXYZ[1])/3)
         {
             return mar;
         }
