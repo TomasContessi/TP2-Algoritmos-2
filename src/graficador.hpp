@@ -21,7 +21,6 @@ class graficador
 {
 private:
 
-public:
     BMP tablero;
     BMP pantalla;
     graficas_t graficas;
@@ -32,6 +31,8 @@ public:
     std::string observador;
     std::string rutaSalida;
     std::string rutaGraficas;
+
+    bool mapaVisible;
 
 
 
@@ -59,6 +60,8 @@ public:
     //pos:
     BMP imgSelector(TiposCarta_T);
 
+    public:
+
     //pre:
     //pos: crea un objeto graficador
     graficador(mapa*,ronda*);
@@ -82,6 +85,10 @@ public:
     //pre:
     //pos: carga la estructura de graficas leyendolas de la ruta especifiada en rutaGraficas
     void cargarGraficas();
+
+    //pre:
+    //pos:
+    void enmascarar(bool);
 
 };
 

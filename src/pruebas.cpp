@@ -81,7 +81,9 @@ int main(){
     printer->cargarGraficas();
     printer->selecRutaSalida("../tableros/");
 
+    printer->enmascarar(true);
     printer->graficarPantalla("player_1");
+    printer->enmascarar(false);
     printer->graficarPantalla("player_2");
 
     delete printer;

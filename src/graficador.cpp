@@ -20,6 +20,7 @@ graficador::graficador(mapa* map,ronda* ronda)
     this->observador="";
     this->rutaGraficas="";
     this->rutaSalida="";
+    this->mapaVisible=false;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -136,7 +137,7 @@ void graficador::agregarCartas(){
             {
                 ocupante=this->mapita->getPropietario(this->mapita->getCursor()); // busco su pcupante
 
-                if (observador==ocupante || observador == "") // si el ocupante es quien mira, o quien mira tiene un zeppelin
+                if (observador==ocupante || this->mapaVisible == true) // si el ocupante es quien mira, o quien mira tiene un zeppelin
                 {
                     tipo=this->rondita->getCardType(ocupante,this->mapita->getCursor().data()); // en ese lugar voy a graficar el tipo de carta
 
@@ -321,6 +322,12 @@ void graficador::cargarGraficas(){
         }
     }
     
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void graficador::enmascarar(bool opcion){
+    this->mapaVisible= !opcion; // si, que la logica invierta es feo pero no se me ocurrian mejores nombres
 }
 
 //---------------------------------------------------------------------------------------------------------------------
