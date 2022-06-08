@@ -15,7 +15,8 @@
 using namespace std;
 
 
-int main(){
+//int main(){
+    int tester(){ //esto es para que no se defina dos veces el main
     mapa* mapita;
     ronda* rondita;
 
@@ -41,6 +42,7 @@ int main(){
     Rescale(tablero,'H',400);
     tablero.WriteToFile("../tableros/tablero_tst.bmp");
 */
+
     cout<<"starting..."<<endl;
     mapita= new mapa(rio,dim);
     rondita= new ronda;

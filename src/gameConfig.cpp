@@ -33,6 +33,8 @@ void gameConfig::loadConfig(std::string path){ // por ahora esta hardcodeado has
     this->nombres={"player_1","player_2"};
     this->nSoldados=3;
     this->tipoMapa=costa;
+    this->rutaGraficas="../graphics_20/";
+    this->rutaTableros="../tableros/";
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -65,4 +67,17 @@ TipoMapa_T gameConfig::getMapType(){
 
 std::vector<std::string> gameConfig::getPlayerNames(){
     return this->nombres;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+
+std::string gameConfig::getGraficsPath(){
+    return this->rutaGraficas;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+std::string gameConfig::getOutPath(){
+    return this->rutaTableros;
 }

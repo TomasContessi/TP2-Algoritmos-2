@@ -23,6 +23,9 @@ private:
     int nSoldados; //cantidad de soldados por jugador
     TipoMapa_T tipoMapa; // en cual de los mapas jugar
     std::vector<std::string>nombres; // los nombres de los jugadores
+    std::string rutaGraficas;
+    std::string rutaTableros;
+    std::string rutaConfig;
 
 public:
 
@@ -57,6 +60,14 @@ public:
     //pre:
     //pos:
     std::vector<std::string> getPlayerNames();
+
+    //pre:
+    //pos:
+    std::string getGraficsPath();
+
+    //pre:
+    //pos:
+    std::string getOutPath();
 };
 
 
