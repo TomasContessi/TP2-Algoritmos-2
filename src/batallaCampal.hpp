@@ -7,6 +7,14 @@
 #include "mapa.hpp"
 #include "graficador.hpp"
 
+//---------------------------------------------------------------------------------------------------------------------
+//                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
+//---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//                                        DEFINICION DE LA CLASE BATALLA CAMPAL
+//---------------------------------------------------------------------------------------------------------------------
+
 enum EstadoPartida_T {
     iniciando,
     jugando,
@@ -19,6 +27,7 @@ struct mensaje_t // aca voy a ir cargando los mensajes que voy a mostrar por con
     std::string bienvenida;
     std::string ingreseNombre;
     std::string cartas;
+
     std::string aviones;
     std::string misiles;
     std::string barcos;
@@ -34,25 +43,63 @@ private:
     mensaje_t mensaje;
     EstadoPartida_T estado; // estado de la partida
     gameConfig* configuracion; // configuracion de la partida
-    ronda* ronda;
-    mapa* mapa; // mapa de la partida, es una lista de casillas
+    ronda* rondita;
+    mapa* map; // mapa de la partida, es una lista de casillas
     graficador* printer;
-public:
-    //pre
-    //pos crea el objeto batalla campal cy carga la configuracion
-    batallaCampal();
-    //pre
-    //pos destrulle el objeto batalla campal y libera la memoria del mapa y la lista de jugadores
-    virtual ~batallaCampal();
+
+
+
     //pre
     //pos genera el mapa de la partida
     void generarMapa();
+
+    //pre
+    //pos
+    void generarRonda();
+
+    //pre
+    //pos
+    void generarImpresora();
+
+    //pre
+    //pos
+    void cargarConfiguracion();
+
+    //pre
+    //pos
+    void cargarConfiguracion(std::string);
+
+
+
+    //pre
+    //pos devuelve true si el jugador tiene un zeppelin
+    bool buscarZeppelin(std::string);
+
+public:
+
+    //pre
+    //pos crea el objeto batalla campal cy carga la configuracion
+    batallaCampal();
+
+    //pre
+    //pos destrulle el objeto batalla campal y libera la memoria del mapa y la lista de jugadores
+    virtual ~batallaCampal();
+
     //pre
     //pos ejecuta el turno del jugador en turno, cambia al siguiente jugador, modifica el mapa y el estado en consecuencia de lo que suceda
     void ejecutarTurno();
+
     //pre que haya un ganador
     //pos imprime un mensaje saludando al jugador ganador
     void saludarGanador();
+
+    //pre
+    //pos
+    EstadoPartida_T getState();
+
+    //pre
+    //pos
+    void printPlayersScreens();
 };
 
 

@@ -184,6 +184,44 @@ std::string ronda::getJugadorEnTurno(){
 }
 
 //---------------------------------------------------------------------------------------------------------------------
+
+EstadoJugador_T ronda::getPlayerState(std::string nombre){
+    jugador* aux;
+
+    aux= this->jugadores;
+
+    if (aux->getSig() == aux)// si solo hay un jugador en la lista
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+        {
+            if(aux->contarCartas(soldado) < 1){
+                aux->setState(derrotado);
+            }
+            return aux->getState();
+        }
+        return derrotado;
+    }
+
+    while (aux->getSig() != this->jugadores)
+    {
+        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+        {
+            if(aux->contarCartas(soldado) < 1){
+                aux->setState(derrotado);
+            }
+            return aux->getState();
+        }
+
+        aux=aux->getSig();
+
+        if (aux == NULL)
+        {
+            throw "error de continuidad de la lista";
+        }       
+    }  
+}
+
+//---------------------------------------------------------------------------------------------------------------------
 //                                              METODOS SOBRE CARTAS
 //---------------------------------------------------------------------------------------------------------------------
 

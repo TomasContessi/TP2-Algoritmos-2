@@ -29,8 +29,8 @@ gameConfig::~gameConfig()
 
 void gameConfig::loadConfig(std::string path){ // por ahora esta hardcodeado hasta que aprenda a leer archivos de configuracion
     this->nCasillas={10,10,1};
-    this->nJugadores=2;
     this->nombres={"player_1","player_2"};
+    this->nJugadores=this->nombres.size();
     this->nSoldados=3;
     this->tipoMapa=costa;
     this->rutaGraficas="../graphics_20/";

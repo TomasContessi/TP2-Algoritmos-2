@@ -106,6 +106,10 @@ public:
     //pre:
     //pos: el jugador en turno lee el tipo de carta en la posicion especifica
     TiposCarta_T getCardType(std::string,unsigned int [3]);
+
+    //pre:
+    //pos:
+    EstadoJugador_T getPlayerState(std::string);
 };
 
 

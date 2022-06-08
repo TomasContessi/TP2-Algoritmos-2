@@ -94,6 +94,10 @@ private:
     //pos:
     void cargarMapa(mapa*,ronda*);
 
+    //pre:
+    //pos:
+    void cambiarFondo(std::string);
+
 };
 
 
