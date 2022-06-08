@@ -35,6 +35,7 @@ void gameConfig::loadConfig(std::string path){ // por ahora esta hardcodeado has
     this->tipoMapa=costa;
     this->rutaGraficas="../graphics_20/";
     this->rutaTableros="../tableros/";
+    this->idioma="esp";
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -80,4 +81,10 @@ std::string gameConfig::getGraficsPath(){
 
 std::string gameConfig::getOutPath(){
     return this->rutaTableros;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+std::string gameConfig::getLanguage(){
+    return this->idioma;
 }

@@ -43,6 +43,11 @@ printer->enmascarar(true);
 
 printer->graficarPantalla(config->getPlayerNames()[0]);
 
+delete printer;
+delete rondita;
+delete map;
+delete config;
+
 cout<<"ok"<<endl;
 
 }

@@ -26,6 +26,7 @@ private:
     std::string rutaGraficas;
     std::string rutaTableros;
     std::string rutaConfig;
+    std::string idioma;
 
 public:
 
@@ -68,6 +69,10 @@ public:
     //pre:
     //pos:
     std::string getOutPath();
+
+    //pre:
+    //pos:
+    std::string getLanguage();
 };
 
 
