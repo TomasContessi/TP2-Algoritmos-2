@@ -18,6 +18,7 @@ ronda::ronda()
     this->jugadores=NULL;
     this->jugadorEnTurno=this->jugadores;
     this->nuevaCarta=NULL;
+    srand(time(NULL)); // inicio una semilla aleatoria con la hora de mi maquina (hago esto porque sino siempre baraja igual)
 }
 
 ronda::~ronda()
@@ -189,7 +190,7 @@ std::string ronda::getJugadorEnTurno(){
 TiposCarta_T ronda::tomarCarta(){
     TiposCarta_T tipo;
 
-    srand(time(NULL)); // inicio una semilla aleatoria con la hora de mi maquina (hago esto porque sino siempre baraja igual)
+    //srand(time(NULL)); // inicio una semilla aleatoria con la hora de mi maquina (hago esto porque sino siempre baraja igual)
     tipo=TiposCarta_T (rand() % (LAST_CARD_TYPE + 1)); // genero aleatoriamente el tipo de carta que voy a sacar
     return this->tomarCarta(tipo); // genero la carta y devuelvo su tipo
 }

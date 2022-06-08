@@ -59,7 +59,7 @@ int main(){
     {
         pos[0]++;
         pos[1]++;
-        rondita->tomarCarta(soldado);
+        rondita->tomarCarta();
         rondita->jugarCarta(pos.data());
         mapita->takeCasilla(pos,rondita->getJugadorEnTurno());
         rondita->avanzarTurno();

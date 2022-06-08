@@ -90,6 +90,10 @@ private:
     //pos:
     void enmascarar(bool);
 
+    //pre:
+    //pos:
+    void cargarMapa(mapa*,ronda*);
+
 };
 
 
