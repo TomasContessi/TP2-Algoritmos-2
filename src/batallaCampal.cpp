@@ -1,4 +1,9 @@
+#include <iostream>
+#include <string>
+
 #include "batallaCampal.hpp"
+
+using namespace std;
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
@@ -22,6 +27,8 @@ batallaCampal::batallaCampal(){
     this->printer = NULL;
 
     this->cargarConfiguracion(); // muy importante que esto sea lo primero que hace el tda
+
+    this->rondita->iniciarRonda();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -35,6 +42,9 @@ batallaCampal::~batallaCampal(){
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                                  METODOS PRIVADOS
+//---------------------------------------------------------------------------------------------------------------------
+
+//                                              METODOS DE CONFIGURACION
 //---------------------------------------------------------------------------------------------------------------------
 
 void batallaCampal::generarMapa(){
@@ -102,6 +112,176 @@ void batallaCampal::cargarConfiguracion(std::string path){
     this->generarImpresora();
 }
 
+//                                                  METODOS DE LOGICA
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::playerReady(){
+    string nombre;
+    string entrada;
+
+    nombre = this->rondita->getJugadorEnTurno();
+
+    cout << nombre << " " << this->mensaje.listo << endl;
+    cout << this->mensaje.Y_N << endl;
+
+    cin >> entrada;
+
+    cout << endl;
+
+    if (entrada == "Y" || entrada == "y")
+    {
+        return true;
+    }
+
+    return false;
+    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::atackStage(){
+
+    string entrada;
+
+    cout << this->mensaje.deseaAtacar << endl; 
+    cout << this->mensaje.Y_N << endl;
+
+    cout << endl;
+
+    cin >> entrada;
+
+    cout << endl;
+
+    if (entrada == "n" || entrada == "N")
+    {
+        return true;
+    }
+
+
+    if (this->cardSelectionStage() == true) // con este tipo de logica segun yo puedo ir anidando todas las decisiones
+    {
+        while (this->targetStrikeStage() == false){}
+        return true;
+    }
+    
+    cout << this->mensaje.casillaInvalida << endl;
+    cout << endl;
+
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::regroupStage(){
+    string entrada;
+
+    cout << this->mensaje.deseaMover << endl; 
+    cout << this->mensaje.Y_N << endl;
+
+    cout << endl;
+
+    cin >> entrada;
+
+    cout << endl;
+
+    if (entrada == "n" || entrada == "N")
+    {
+        return true;
+    }
+
+
+    if (this->cardSelectionStage() == true)
+    {
+        while (this->moveStage() == false){}
+        return true;
+    }
+    
+    cout << this->mensaje.casillaInvalida << endl;
+    cout << endl;
+
+    return false;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::cardChoiceStage(){
+    string entrada;
+    int coordenada;
+    vector<unsigned int> pos;
+
+    cout << this->mensaje.conservarCarta << endl; 
+    cout << this->mensaje.Y_N << endl;
+
+    cout << endl;
+
+    cin >> entrada;
+
+    cout << endl;
+
+    if (entrada == "n" || entrada == "N")
+    {
+        this->rondita->tirarCarta();
+        return true;
+    }
+
+    while (this->ingresarPosicion(&pos) == false){}
+    
+    if (this->verificarPosicionCarta(this->rondita->getCardType(),pos) == false)
+    {
+        cout << this->mensaje.cartaPosInvalid << endl;
+        cout << endl;
+        return false;
+    }
+
+    this->rondita->jugarCarta(pos.data());
+    this->map->takeCasilla(pos,this->rondita->getJugadorEnTurno());
+    return true;
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::cardSelectionStage(){}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::targetStrikeStage(){}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::aditionalAtacksStage(){}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::ingresarPosicion(std::vector<unsigned int> * pos){
+    unsigned int entrada;
+
+    for (size_t i = 0; i < this->mensaje.coordenadas.size(); i++)
+    {
+        cout << this->mensaje.ingreseCoordenada << " " << this->mensaje.coordenadas[i] << endl;
+
+        cout << this->mensaje.Y_N << endl;
+
+        cout << endl;
+
+        cin >> entrada;
+
+        cout << endl;
+
+        if (entrada > this->configuracion->getDimXYZ()[i])
+        {
+            cout << this->mensaje.coordenadaInvalida << endl;
+            return false;
+        }    
+        (*pos)[i]=entrada; 
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void batallaCampal::buryBodies(){}
+
 //---------------------------------------------------------------------------------------------------------------------
 //                                                  METODOS PUBLICOS
 //---------------------------------------------------------------------------------------------------------------------
@@ -109,6 +289,24 @@ void batallaCampal::cargarConfiguracion(std::string path){
 
 void batallaCampal::ejecutarTurno(){
 
+    while (this->playerReady() == false){} //hago asi para poder volver atras en los menus sin anidar una infinidad de ifs
+
+    while (this->atackStage() == false){}
+
+    while (this->regroupStage() == false){}
+
+    while (this->aditionalAtacksStage() == false){}
+
+    this->rondita->tomarCarta();
+
+    while (this->cardChoiceStage() == false){}
+
+    this->printPlayersScreens();
+
+    this->buryBodies();
+
+    this->rondita->avanzarTurno();
+    
 }
 
 //---------------------------------------------------------------------------------------------------------------------

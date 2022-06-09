@@ -27,6 +27,16 @@ struct mensaje_t // aca voy a ir cargando los mensajes que voy a mostrar por con
     std::string bienvenida;
     std::string ingreseNombre;
     std::string cartas;
+    std::string listo;
+    std::string Y_N;
+    std::string casillaInvalida;
+    std::string deseaAtacar;
+    std::string deseaMover;
+    std::string conservarCarta;
+    std::string ingreseCoordenada;
+    std::vector<std::string> coordenadas;
+    std::string coordenadaInvalida;
+    std::string cartaPosInvalid;
 
     std::string aviones;
     std::string misiles;
@@ -46,6 +56,7 @@ private:
     ronda* rondita;
     mapa* map; // mapa de la partida, es una lista de casillas
     graficador* printer;
+
 
 
 
@@ -70,11 +81,49 @@ private:
     void cargarConfiguracion(std::string);
 
 
+    //pre
+    //pos
+    bool playerReady();
 
     //pre
-    //pos devuelve true si el jugador tiene un zeppelin
-    bool buscarZeppelin(std::string);
+    //pos
+    bool atackStage();
 
+    //pre
+    //pos
+    bool regroupStage();
+
+    //pre
+    //pos
+    bool cardChoiceStage();
+
+    //pre
+    //pos
+    bool cardSelectionStage();
+
+    //pre
+    //pos
+    bool targetStrikeStage();
+
+    //pre
+    //pos
+    bool moveStage();
+
+    //pre
+    //pos
+    bool aditionalAtacksStage();
+
+    //pre
+    //pos
+    bool ingresarPosicion(std::vector<unsigned int>*);
+
+    //pre
+    //pos
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int>);
+
+    //pre
+    //pos
+    void buryBodies();
 public:
 
     //pre

@@ -18,36 +18,12 @@
 
 using namespace std;
 
+void fun(std::vector<int> * valor){
+    (*valor)[0]=27;
+}
+
 int main(){
-gameConfig* config;
-mapa* map;
-ronda* rondita;
-graficador* printer;
-
-
-config = new gameConfig;
-map = new mapa(config->getMapType(),config->getDimXYZ());
-rondita = new ronda ();
-printer = new graficador(map,rondita);
-
-rondita->agregarJugador(new jugador(config->getPlayerNames()[0]));
-rondita->agregarJugador(new jugador(config->getPlayerNames()[1]));
-
-printer->cargarMapa(map,rondita);
-
-printer->selecRutaGraficas(config->getGraficsPath());
-printer->cargarGraficas();
-printer->selecRutaSalida(config->getOutPath());
-
-printer->enmascarar(true);
-
-printer->graficarPantalla(config->getPlayerNames()[0]);
-
-delete printer;
-delete rondita;
-delete map;
-delete config;
-
-cout<<"ok"<<endl;
-
+vector<int> n={0};
+fun(&n);
+cout << n[0] << endl;
 }

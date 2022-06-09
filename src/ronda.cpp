@@ -219,6 +219,7 @@ EstadoJugador_T ronda::getPlayerState(std::string nombre){
             throw "error de continuidad de la lista";
         }       
     }  
+    return derrotado;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -399,4 +400,10 @@ TiposCarta_T ronda::getCardType(std::string nombre,unsigned int pos[3]){
     } 
     
     throw "no hay un jugador con ese nombre";
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+TiposCarta_T ronda::getCardType(){
+    return this->nuevaCarta->getType();
 }

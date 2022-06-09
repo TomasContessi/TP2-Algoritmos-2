@@ -68,7 +68,7 @@ public:
     TiposCarta_T tomarCarta(TiposCarta_T);
 
     //pre:
-    //pos: el jugado en turno posiciona en el mapa y su mano la nueva carta que tomo
+    //pos: el jugado en turno posiciona en su mano la nueva carta que tomo
     void jugarCarta(unsigned int [3]);
 
     //pre:
@@ -106,6 +106,10 @@ public:
     //pre:
     //pos: el jugador en turno lee el tipo de carta en la posicion especifica
     TiposCarta_T getCardType(std::string,unsigned int [3]);
+
+    //pre:
+    //pos: el jugador en turno lee el tipo de carta que tiene en la mano sin jugar
+    TiposCarta_T getCardType();
 
     //pre:
     //pos:
