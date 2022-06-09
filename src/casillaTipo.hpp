@@ -11,9 +11,9 @@
 
 
 enum CasillaTipo_T {
-    aire,
-    tierra,
-    mar
+    tierra=0,
+    aire=1,
+    mar=2
 };
 
 #endif /* CASILLA_TIPO_H */

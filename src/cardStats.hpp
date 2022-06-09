@@ -1,6 +1,9 @@
 #ifndef CARDS_STATS_H
 #define CARDS_STATS_H
 
+#include "casillaTipo.hpp"
+#include <vector>
+
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
@@ -15,6 +18,7 @@ struct CardStats
     int alcance; // alcance del ataque
     int disparos; // cantidad de disparos por turno que tiene la carta
     int movimiento [3]; // distancia que se puede mover una carta en un turno en cada terreno. 0 tierra, 1 aire, 2 agua
+    std::vector<CasillaTipo_T> terrenoAfin;
 };
 
 #endif /* CARDS_STATS_H */

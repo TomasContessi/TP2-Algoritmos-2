@@ -73,7 +73,7 @@ void ronda::eliminarJugador(std::string nombre){
 
     if (this->jugadores == NULL)
     {
-        this->iniciarRonda(); // voy reiniciando la ronda cada vez que elimino un jugador para no dar la posibilidad a apuntar a memoria ajena
+        this->iniciarRonda(); 
         return;
     }
 
@@ -98,7 +98,7 @@ void ronda::eliminarJugador(std::string nombre){
         {
             aux2->setSiguiente(aux->getSig()); // saco al jugador con ese nombre
             delete aux;
-            this->iniciarRonda();
+            this->jugadorEnTurno = aux2;
             return;
         }
 
@@ -117,7 +117,7 @@ void ronda::eliminarJugador(std::string nombre){
         aux2->setSiguiente(aux->getSig()); // saco al jugador con ese nombre
         this->jugadores=aux->getSig();
         delete aux;
-        this->iniciarRonda();
+        this->jugadorEnTurno = aux2;
         return;
     }
     

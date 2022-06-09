@@ -41,12 +41,13 @@ void carta::setType(TiposCarta_T tipo){
     switch (tipo)
     {
     case misil:
-        this->stats.alcance=30;
+        this->stats.alcance=15;
         this->stats.AoE=3;
         this->stats.disparos=1;
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={tierra};
         break;
     case avion:
         this->stats.alcance=10;
@@ -55,22 +56,25 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=1;
         this->stats.movimiento[1]=10;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={aire};
         break;
     case barco:
-        this->stats.alcance=30;
+        this->stats.alcance=15;
         this->stats.AoE=3;
         this->stats.disparos=1;
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=1;
+        this->stats.terrenoAfin={mar};
         break;
     case bomba_atomica:
         this->stats.alcance=0;
-        this->stats.AoE=30;
+        this->stats.AoE=31;
         this->stats.disparos=1;
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={tierra,aire,mar};
         break;
     case dirigible:
         this->stats.alcance=0;
@@ -79,6 +83,7 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=1;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={aire};
         break;
     case ciclon:
         this->stats.alcance=0;
@@ -87,6 +92,7 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={aire};
         break;
     case terremoto:
         this->stats.alcance=0;
@@ -95,6 +101,7 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={tierra};
         break;
     case tsunami:
         this->stats.alcance=0;
@@ -103,6 +110,7 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=0;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=0;
+        this->stats.terrenoAfin={mar};
         break;
     case soldado:
         this->stats.alcance=10;
@@ -111,6 +119,7 @@ void carta::setType(TiposCarta_T tipo){
         this->stats.movimiento[0]=1;
         this->stats.movimiento[1]=0;
         this->stats.movimiento[2]=1;
+        this->stats.terrenoAfin={tierra,aire};
         break;
     
     default:

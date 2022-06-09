@@ -101,7 +101,7 @@ public:
     //pre:
     //pos: recarga la municion
     void reloadAmmo();
-    
+        
 };
 
 #endif /* CARTA_H */

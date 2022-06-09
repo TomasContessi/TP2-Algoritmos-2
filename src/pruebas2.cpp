@@ -12,18 +12,19 @@
 #include "mapa.hpp"
 #include "graficador.hpp"
 #include "gameConfig.hpp"
+#include "batallaCampal.hpp"
 
 
 #include "EasyBMP.h"
 
 using namespace std;
 
-void fun(std::vector<int> * valor){
-    (*valor)[0]=27;
-}
-
 int main(){
-vector<int> n={0};
-fun(&n);
-cout << n[0] << endl;
+    batallaCampal * juego;
+    juego=new batallaCampal();
+
+    juego->iniciarPartida();
+
+    delete juego;
+    return 0;
 }

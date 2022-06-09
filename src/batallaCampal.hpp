@@ -1,6 +1,9 @@
 #ifndef BATALLA_CAMPAL_H
 #define BATALLA_CAMPAL_H
 
+#include <iostream>
+#include <cstdlib>
+#include <vector>
 
 #include "gameConfig.hpp"
 #include "ronda.hpp"
@@ -95,6 +98,9 @@ private:
     //pos
     void cargarConfiguracion(std::string);//
 
+    //pre
+    //pos
+    void cargarIdioma();
 
     //pre
     //pos
@@ -114,15 +120,15 @@ private:
 
     //pre
     //pos
-    bool cardSelectionStage(vector<unsigned int>*);//
+    bool cardSelectionStage(std::vector<unsigned int>*);//
 
     //pre
     //pos
-    bool targetStrikeStage(vector<unsigned int>);//
+    bool targetStrikeStage(std::vector<unsigned int>);//
 
     //pre
     //pos
-    bool moveStage(vector<unsigned int>);//
+    bool moveStage(std::vector<unsigned int>);//
 
     //pre
     //pos
@@ -134,15 +140,15 @@ private:
 
     //pre
     //pos
-    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int>);
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int>);//
 
     //pre
     //pos
-    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int> posA,std::vector<unsigned int> posB);
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int> posA,std::vector<unsigned int> posB);//
 
     //pre
     //pos
-    bool verificarRange(int range,std::vector<unsigned int> posA,std::vector<unsigned int> posB);
+    bool verificarRange(int range,std::vector<unsigned int> posA,std::vector<unsigned int> posB);//
 
     //pre
     //pos
@@ -150,11 +156,12 @@ private:
 
     //pre
     //pos
-    void atacarPosicion(int Aoe , std::vector<unsigned int> pos);
+    void atacarPosicion(int Aoe , std::vector<unsigned int> pos);//
 
     //pre
     //pos
     bool ejecuarMecanica();//
+
 public:
 
     //pre
@@ -166,8 +173,16 @@ public:
     virtual ~batallaCampal();
 
     //pre
+    //pos
+    void iniciarPartida();
+
+    //pre
     //pos ejecuta el turno del jugador en turno, cambia al siguiente jugador, modifica el mapa y el estado en consecuencia de lo que suceda
     void ejecutarTurno();
+
+    //pre
+    //pos
+    int verificarJugadores();
 
     //pre que haya un ganador
     //pos imprime un mensaje saludando al jugador ganador

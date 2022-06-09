@@ -167,7 +167,7 @@ int jugador::getCardAmmo (){
     ammo=0;
     if (this->cartas==NULL)
     {
-        return;
+        return 0;
     }
 
     aux=this->cartas;
