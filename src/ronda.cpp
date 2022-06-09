@@ -168,6 +168,7 @@ void ronda::iniciarRonda(){
 //---------------------------------------------------------------------------------------------------------------------
 
 void ronda::avanzarTurno(){
+    this->reloadAmmo();
     this->jugadorEnTurno=this->jugadorEnTurno->getSig();
     this->tirarCarta();
 }
@@ -220,6 +221,18 @@ EstadoJugador_T ronda::getPlayerState(std::string nombre){
         }       
     }  
     return derrotado;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::getTotalAmmo(){
+    return this->jugadorEnTurno->getCardAmmo();
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void ronda::reloadAmmo(){
+    this->jugadorEnTurno->reloadCardAmmo();
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -406,4 +419,22 @@ TiposCarta_T ronda::getCardType(std::string nombre,unsigned int pos[3]){
 
 TiposCarta_T ronda::getCardType(){
     return this->nuevaCarta->getType();
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool ronda::verificarCartaExistente(std::vector<unsigned int> pos){
+    return this->jugadorEnTurno->verificarCarta(pos);    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::getCardAmmo(unsigned int pos[3]){
+    return this->jugadorEnTurno->getCardAmmo(pos);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int ronda::shoot(unsigned int pos[3]){
+    return this->jugadorEnTurno->shoot(pos);
 }

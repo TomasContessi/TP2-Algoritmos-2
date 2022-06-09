@@ -17,6 +17,7 @@ carta::carta(std::string propietario,TiposCarta_T tipo)
 {
     this->propieario=propietario;
     this->setType(tipo);
+    this->municionRestante = this->stats.disparos;
 
     this->siguienteCarta=NULL;
 
@@ -152,6 +153,22 @@ void carta::setPos (unsigned int pos[]){
 }
 
 //---------------------------------------------------------------------------------------------------------------------
+
+int carta::shoot(){
+    if (this->municionRestante < 1)
+    {
+        throw "no habia municion";
+    }
+    return this->municionRestante--;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void carta::reloadAmmo(){
+    this->municionRestante = this->stats.disparos;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
 //                                            METODOS DE OBTENCION DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -195,6 +212,14 @@ unsigned int* carta::getPos(){
     return this->posicion;
 }
 
+//---------------------------------------------------------------------------------------------------------------------
+
 CardStats carta::getStats(){
     return this->stats;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int carta::getAmmo(){
+    return this->municionRestante;
 }

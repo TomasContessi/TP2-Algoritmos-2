@@ -76,6 +76,30 @@ public:
     //pos: devuelve las stats de la carta que el jugador tiene en la casilla especificada
     CardStats getCardStats (unsigned int [3]);
     
+    //pre:
+    //pos: devuelve la municion restante de la carta que el jugador tiene en la casilla especificada
+    int getCardAmmo (unsigned int [3]);
+
+    //pre:
+    //pos: hace un disparo y devuelve la municion restante de la carta que el jugador tiene en la casilla especificada
+    int shoot (unsigned int [3]);
+
+    //pre:
+    //pos: devuelve toda la municion restante
+    int getCardAmmo ();
+
+    //pre:
+    //pos: recarga la municion de la carta que el jugador tiene en la casilla especificada
+    void reloadCardAmmo (unsigned int [3]);
+
+    //pre:
+    //pos: recarga toda la municion
+    void reloadCardAmmo ();
+
+    //pre:
+    //pos:
+    bool verificarCarta (std::vector<unsigned int> pos);
+    
 };
 
 

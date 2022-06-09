@@ -100,6 +100,22 @@ public:
     CardStats getCardStats(unsigned int [3]);
 
     //pre:
+    //pos: devuelve la municion restante de la carta especifica del jugador en turno
+    int getCardAmmo(unsigned int [3]);
+
+    //pre:
+    //pos: devuelve toda la municion restante del jgador en turno
+    int getTotalAmmo();
+
+    //pre:
+    //pos: recarga toda la municion del jugador en turno
+    void reloadAmmo();
+
+    //pre:
+    //pos: el municion efectua un disparo con la carta especificada
+    int shoot(unsigned int [3]);
+
+    //pre:
     //pos: el jugador en turno lee el tipo de carta en la posicion especifica
     TiposCarta_T getCardType(unsigned int [3]);
 
@@ -114,6 +130,10 @@ public:
     //pre:
     //pos:
     EstadoJugador_T getPlayerState(std::string);
+
+    //pre:
+    //pos:
+    bool verificarCartaExistente(std::vector<unsigned int>);
 };
 
 

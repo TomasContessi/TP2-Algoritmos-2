@@ -134,6 +134,79 @@ CardStats jugador::getCardStats (unsigned int pos []){
 
 //---------------------------------------------------------------------------------------------------------------------
 
+int jugador::getCardAmmo (unsigned int pos []){
+    carta* aux;
+    CardStats empy_stats;
+
+    if (this->cartas==NULL)
+    {
+        return 0;
+    }
+
+    aux=this->cartas;
+
+    while (aux->getNext() != NULL && compararPos(aux->getPos(),pos) != true) // voy buscando la carta en esa posicion hasta terminar el monton
+    {
+        aux=aux->getNext();
+    }
+
+    if (compararPos(aux->getPos(),pos))
+    {
+        return aux->getAmmo();
+    }
+
+    return 0;
+    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int jugador::getCardAmmo (){
+    carta* aux;
+    int ammo;
+    ammo=0;
+    if (this->cartas==NULL)
+    {
+        return;
+    }
+
+    aux=this->cartas;
+
+    while (aux != NULL) // mientras tenga cartas las hago recargar
+    {
+        if (aux->getType() != soldado) // no cuento los soldados porque estos no dan ataques extra
+        {
+            ammo = ammo + aux->getAmmo();
+            aux = aux->getNext();
+        }
+    } 
+    return ammo;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+int jugador::shoot(unsigned int pos[3]){
+    carta* aux;
+    if (this->cartas==NULL)
+    {
+        return 0;
+    }
+
+    aux=this->cartas;
+
+    while (aux != NULL) // mientras tenga cartas busco
+    {
+        if (compararPos(aux->getPos(),pos) == true) // cuando la enfuentro disparo
+        {
+            return aux->shoot();
+        }
+        aux = aux->getNext();
+    } 
+    return 0;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
 TiposCarta_T jugador::getCardType (unsigned int pos []){
     carta* aux;
 
@@ -158,6 +231,46 @@ TiposCarta_T jugador::getCardType (unsigned int pos []){
     
 }
 
+//---------------------------------------------------------------------------------------------------------------------
+
+void jugador::reloadCardAmmo (unsigned int pos []){
+    carta* aux;
+    if (this->cartas==NULL)
+    {
+        return;
+    }
+
+    aux=this->cartas;
+
+    while (aux->getNext() != NULL && compararPos(aux->getPos(),pos) != true) // voy buscando la carta en esa posicion hasta terminar el monton
+    {
+        aux=aux->getNext();
+    }
+
+    if (compararPos(aux->getPos(),pos))
+    {
+        aux->reloadAmmo();
+        return;
+    }   
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void jugador::reloadCardAmmo (){
+    carta* aux;
+    if (this->cartas==NULL)
+    {
+        return;
+    }
+
+    aux=this->cartas;
+
+    while (aux != NULL) // mientras tenga cartas las hago recargar
+    {
+        aux->reloadAmmo();
+        aux=aux->getNext();
+    } 
+}
 //---------------------------------------------------------------------------------------------------------------------
 //                                            METODOS DE SETEO DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
@@ -190,4 +303,21 @@ std::string jugador::getName(){
 
 jugador* jugador::getSig(){
     return this->siguienteJugador;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool jugador::verificarCarta (std::vector<unsigned int> pos){
+    carta* aux;
+
+    aux=this->cartas;
+    while (aux != NULL)
+    {
+        if (compararPos(pos.data(),aux->getPos()) == true)
+        {
+            return true;
+        }
+        
+    }
+    return false;
 }

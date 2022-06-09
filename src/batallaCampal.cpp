@@ -140,7 +140,7 @@ bool batallaCampal::playerReady(){
 //---------------------------------------------------------------------------------------------------------------------
 
 bool batallaCampal::atackStage(){
-
+    vector<unsigned int> pos;
     string entrada;
 
     cout << this->mensaje.deseaAtacar << endl; 
@@ -152,19 +152,19 @@ bool batallaCampal::atackStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N")
+    if (entrada == "n" || entrada == "N") // si no se desea atacar retorno operacion exitosa y vuelvo
     {
         return true;
     }
 
-
-    if (this->cardSelectionStage() == true) // con este tipo de logica segun yo puedo ir anidando todas las decisiones
+    // con este tipo de logica segun yo puedo ir anidando todas las decisiones
+    if (this->cardSelectionStage(&pos) == true) // si se deseaba atacar pido seleccionar la carta con la cual se va a atacar
     {
-        while (this->targetStrikeStage() == false){}
+        while (this->targetStrikeStage(pos) == false){} // si la carta era valida paso a la parte de ataque
         return true;
     }
     
-    cout << this->mensaje.casillaInvalida << endl;
+    cout << this->mensaje.casillaInvalida << endl; // si la casilla era invalida devuelvo operacion fracasada y vuelvo a empezar
     cout << endl;
 
     return false;
@@ -174,6 +174,7 @@ bool batallaCampal::atackStage(){
 
 bool batallaCampal::regroupStage(){
     string entrada;
+    vector<unsigned int> pos;
 
     cout << this->mensaje.deseaMover << endl; 
     cout << this->mensaje.Y_N << endl;
@@ -184,19 +185,19 @@ bool batallaCampal::regroupStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N")
+    if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
     {
         return true;
     }
 
 
-    if (this->cardSelectionStage() == true)
+    if (this->cardSelectionStage(&pos) == true) // podo la casilla de la carta a mover
     {
-        while (this->moveStage() == false){}
+        while (this->moveStage(pos) == false){} // si la casilla era valida muevo la carta
         return true;
     }
     
-    cout << this->mensaje.casillaInvalida << endl;
+    cout << this->mensaje.casillaInvalida << endl; // si la casilla era invalida retorno operacion fracasada, lo que me hace volver a empezar la operacion
     cout << endl;
 
     return false;
@@ -218,22 +219,28 @@ bool batallaCampal::cardChoiceStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N")
+    if (entrada == "n" || entrada == "N") // pregunto si se desea la carta y si no la tiro y devuelvo operacion exitosa
     {
         this->rondita->tirarCarta();
         return true;
     }
 
-    while (this->ingresarPosicion(&pos) == false){}
+    if (this->ejecuarMecanica() == true) // si es una carta de mecanicas y no de unidades
+    {
+        this->rondita->tirarCarta();
+        return true;
+    }
     
-    if (this->verificarPosicionCarta(this->rondita->getCardType(),pos) == false)
+    while (this->ingresarPosicion(&pos) == false){} // si era una carta de unidades pido la posicion para colocar
+    
+    if (this->verificarPosicionCarta(this->rondita->getCardType(),pos) == false) // si esa carta no se podia colocar en esa posicion aviso y retorno que fallo la operacion
     {
         cout << this->mensaje.cartaPosInvalid << endl;
         cout << endl;
         return false;
     }
 
-    this->rondita->jugarCarta(pos.data());
+    this->rondita->jugarCarta(pos.data()); // si si se podia la agrego a la partida y retorno que la operacion fue exitosa
     this->map->takeCasilla(pos,this->rondita->getJugadorEnTurno());
     return true;
 }
@@ -241,15 +248,167 @@ bool batallaCampal::cardChoiceStage(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::cardSelectionStage(){}
+bool batallaCampal::cardSelectionStage(vector<unsigned int>* pos){
+
+    cout << this->mensaje.elegirCarta << endl; 
+    while (this->ingresarPosicion(pos) == false){}
+    return this->rondita->verificarCartaExistente(*pos);
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::targetStrikeStage(){}
+bool batallaCampal::moveStage(vector<unsigned int> posA){
+
+    string entrada;
+    vector<unsigned int> posB;
+
+    cout << this->mensaje.aunDeseaMover << endl; 
+    cout << this->mensaje.Y_N << endl;
+
+    cout << endl;
+
+    cin >> entrada;
+
+    cout << endl;
+
+    if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+    {
+        return true;
+    }
+
+    while (this->ingresarPosicion(&posB) == false){}
+
+    if (this->verificarPosicionCarta(this->rondita->getCardType(posA.data()),posA,posB) == false) // si esa carta no se podia colocar en esa posicion aviso y retorno que fallo la operacion
+    {
+        cout << this->mensaje.cartaPosInvalid << endl;
+        cout << endl;
+        return false;
+    }
+
+    // si si se podia mover a esa posicion tengo que verificar si la casilla estaba ocupada
+
+    switch (this->map->getStateCasilla(posB))
+    {
+    case libre:
+        cout << this->mensaje.moviendoTropas << endl;
+        cout << endl;
+
+        this->map->leaveCasilla(posA);
+        this->map->takeCasilla(posB,this->rondita->getJugadorEnTurno());
+        break;
+
+    case ocupada:
+        cout << this->mensaje.casillaOcupada << endl;
+        cout << this->mensaje.tropasPerdidas << endl;
+        cout << endl;
+
+        this->map->leaveCasilla(posA);
+        this->rondita->tirarCarta(posA.data()); // el jugador en turno pierde su carta
+
+        this->map->leaveCasilla(posB);
+        this->rondita->tirarCarta(this->map->getPropietario(posB),posB.data()); // el otro jugador tambien pierde la suya
+        break;
+
+    case destruida:
+        cout << this->mensaje.casillaDestruida << endl;
+        cout << this->mensaje.tropasPerdidas << endl;
+        cout << endl;
+
+        this->map->leaveCasilla(posA);
+        this->rondita->tirarCarta(posA.data()); // el jugador en turno pierde su carta
+        break;
+    
+    default:
+        throw "estado invalido";
+        break;
+    } 
+
+    return true; // despues de mover retorno operacion exitosa para que salga de todos los while
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::aditionalAtacksStage(){}
+bool batallaCampal::targetStrikeStage(vector<unsigned int> posA){
+    string entrada;
+    vector<unsigned int> posB;
+
+    while (this->rondita->getCardAmmo(posA.data()) > 0)
+    {
+        cout << this->rondita->getCardAmmo(posA.data()) << this->mensaje.municionesRestantes << endl;
+        cout << this->mensaje.aunDeseaAtacar << endl; 
+        cout << this->mensaje.Y_N << endl;
+
+        cout << endl;
+
+        cin >> entrada;
+
+        cout << endl;
+
+        if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+        {
+            return true;
+        }
+
+        while (this->ingresarPosicion(&posB) == false){}
+
+        if (this->verificarRange(this->rondita->getCardStats(posA.data()).alcance,posA,posB) == false) // si esa carta no tenia el rango suficiente aviso y retorno que fallo la operacion
+        {
+            cout << this->mensaje.cartaPosInvalid << endl;
+            cout << endl;
+            return false;
+        }
+
+        this->rondita->shoot(posA.data());
+        this->atacarPosicion(this->rondita->getCardStats(posA.data()).AoE,posB);
+        cout << this->mensaje.ataqueExitoso << endl; 
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::aditionalAtacksStage(){
+    string entrada;
+    vector<unsigned int> pos;
+    while (this->rondita->getTotalAmmo() > 0)
+    {
+        cout << this->rondita->getTotalAmmo() << this->mensaje.municionesRestantes << endl;
+        cout << this->mensaje.deseaAtacar << endl; 
+        cout << this->mensaje.Y_N << endl;
+
+        cout << endl;
+
+        cin >> entrada;
+
+        cout << endl;
+
+        if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+        {
+            return true;
+        }
+
+        if (this->cardSelectionStage(&pos) == true) // si se deseaba atacar pido seleccionar la carta con la cual se va a atacar
+        {
+            if (this->rondita->getCardType(pos.data()) == soldado)
+            {
+                cout << this->mensaje.noSoldados << endl; // si la casilla tenia un soldado devuelvo operacion fracasada y vuelvo a empezar
+                cout << endl;
+                return false;
+            }
+            
+            while (this->targetStrikeStage(pos) == false){} // si la carta era valida paso a la parte de ataque
+            return true;
+        }
+    
+        cout << this->mensaje.casillaInvalida << endl; // si la casilla era invalida devuelvo operacion fracasada y vuelvo a empezar
+        cout << endl;
+
+        return false;
+    }
+
+    return true; // si no tengo mas municion restante
+    
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 
@@ -280,7 +439,91 @@ bool batallaCampal::ingresarPosicion(std::vector<unsigned int> * pos){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void batallaCampal::buryBodies(){}
+void batallaCampal::buryBodies(){
+    for (size_t i = 0; i < this->configuracion->getPlayerNames().size(); i++)
+    {
+        if (this->rondita->contarCartas(this->configuracion->getPlayerNames()[i],soldado) < 1) //si no tiene soldados afuera
+        {
+            this->rondita->eliminarJugador(this->configuracion->getPlayerNames()[i]);
+        }       
+    }    
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+bool batallaCampal::ejecuarMecanica(){
+    vector<unsigned int> pos={0,0,0};
+    switch (this->rondita->getCardType())
+    {
+    case terremoto:
+        for (size_t i = 0; i < this->configuracion->getDimXYZ()[0]; i++) // para todas las casillas de x
+        {
+            for (size_t j = 0; j < this->configuracion->getDimXYZ()[1]; j++) // para todas las y
+            {
+                pos[0]=i;
+                pos[1]=j;
+                if (this->map->getTypeCasilla(pos) == tierra && this->map->getStateCasilla(pos) == ocupada)
+                {
+                    if (this->rondita->getCardType(this->map->getPropietario(pos),pos.data()) != soldado) // si matara los soldados seria muy op
+                    {
+                        this->rondita->tirarCarta(this->map->getPropietario(pos),pos.data());
+                        this->map->leaveCasilla(pos);
+                    }                    
+                }
+                
+            }
+            
+        }
+        
+        break;
+    case ciclon:
+        for (size_t k = 1; k < this->configuracion->getDimXYZ()[3]; k++)
+        {
+            pos[2]=k;
+            for (size_t i = 0; i < this->configuracion->getDimXYZ()[0]; i++) // para todas las casillas de x
+            {
+                pos[0]=i;
+                for (size_t j = 0; j < this->configuracion->getDimXYZ()[1]; j++) // para todas las y
+                {
+                    pos[1]=j;
+                    if (this->map->getTypeCasilla(pos) == mar && this->map->getStateCasilla(pos) == ocupada)
+                    {
+                        this->rondita->tirarCarta(this->map->getPropietario(pos),pos.data());
+                        this->map->leaveCasilla(pos);                   
+                    }
+                
+                }
+            
+            }
+        }
+        
+        break;
+    case tsunami:
+        for (size_t i = 0; i < this->configuracion->getDimXYZ()[0]; i++) // para todas las casillas de x
+        {
+            for (size_t j = 0; j < this->configuracion->getDimXYZ()[1]; j++) // para todas las y
+            {
+                pos[0]=i;
+                pos[1]=j;
+                if (this->map->getTypeCasilla(pos) == mar && this->map->getStateCasilla(pos) == ocupada)
+                {
+                    if (this->rondita->getCardType(this->map->getPropietario(pos),pos.data()) != soldado) // si matara los soldados seria muy op
+                    {
+                        this->rondita->tirarCarta(this->map->getPropietario(pos),pos.data());
+                        this->map->leaveCasilla(pos);
+                    }                    
+                }
+                
+            }
+            
+        }
+        break;
+    default:
+        return false;
+        break;
+    }
+    return true; // despues de ejecutar la mecanica avisa que la ejecuto
+}
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                                  METODOS PUBLICOS

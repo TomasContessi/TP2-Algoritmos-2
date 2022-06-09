@@ -32,11 +32,26 @@ struct mensaje_t // aca voy a ir cargando los mensajes que voy a mostrar por con
     std::string casillaInvalida;
     std::string deseaAtacar;
     std::string deseaMover;
+    std::string aunDeseaMover;
+    std::string aunDeseaAtacar;
+
+
+    std::string moviendoTropas;
+    std::string casillaOcupada;
+    std::string casillaDestruida;
+    std::string municionesRestantes;
+    std::string tropasPerdidas;
+
+    std::string noSoldados;
+
+    std::string ataqueExitoso;
+
     std::string conservarCarta;
     std::string ingreseCoordenada;
     std::vector<std::string> coordenadas;
     std::string coordenadaInvalida;
     std::string cartaPosInvalid;
+    std::string elegirCarta;
 
     std::string aviones;
     std::string misiles;
@@ -62,60 +77,60 @@ private:
 
     //pre
     //pos genera el mapa de la partida
-    void generarMapa();
+    void generarMapa();//
 
     //pre
     //pos
-    void generarRonda();
+    void generarRonda();//
 
     //pre
     //pos
-    void generarImpresora();
+    void generarImpresora();//
 
     //pre
     //pos
-    void cargarConfiguracion();
+    void cargarConfiguracion();//
 
     //pre
     //pos
-    void cargarConfiguracion(std::string);
+    void cargarConfiguracion(std::string);//
 
 
     //pre
     //pos
-    bool playerReady();
+    bool playerReady();//
 
     //pre
     //pos
-    bool atackStage();
+    bool atackStage();//
 
     //pre
     //pos
-    bool regroupStage();
+    bool regroupStage();//
 
     //pre
     //pos
-    bool cardChoiceStage();
+    bool cardChoiceStage();//
 
     //pre
     //pos
-    bool cardSelectionStage();
+    bool cardSelectionStage(vector<unsigned int>*);//
 
     //pre
     //pos
-    bool targetStrikeStage();
+    bool targetStrikeStage(vector<unsigned int>);//
 
     //pre
     //pos
-    bool moveStage();
+    bool moveStage(vector<unsigned int>);//
 
     //pre
     //pos
-    bool aditionalAtacksStage();
+    bool aditionalAtacksStage();//
 
     //pre
     //pos
-    bool ingresarPosicion(std::vector<unsigned int>*);
+    bool ingresarPosicion(std::vector<unsigned int>*);//
 
     //pre
     //pos
@@ -123,7 +138,23 @@ private:
 
     //pre
     //pos
-    void buryBodies();
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int> posA,std::vector<unsigned int> posB);
+
+    //pre
+    //pos
+    bool verificarRange(int range,std::vector<unsigned int> posA,std::vector<unsigned int> posB);
+
+    //pre
+    //pos
+    void buryBodies();//
+
+    //pre
+    //pos
+    void atacarPosicion(int Aoe , std::vector<unsigned int> pos);
+
+    //pre
+    //pos
+    bool ejecuarMecanica();//
 public:
 
     //pre

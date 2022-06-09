@@ -27,6 +27,8 @@ private:
     CardStats stats; // stats de ataque y movimiento de la carta
     EstadoCarta_T estado; // si la carta esta en mano o en juego
 
+    int municionRestante;
+
     unsigned int posicion [3]; // posicion de la carta en el tablero
 
     carta* siguienteCarta; // siguiente carta de la lista
@@ -87,6 +89,18 @@ public:
     //pre:
     //pos: devuelve las estadisticas de la carta
     CardStats getStats();
+
+    //pre:
+    //pos: devuelve la municion restante
+    int getAmmo();
+
+    //pre:
+    //pos: efectua un disparo y devuelve la municion restante
+    int shoot();
+
+    //pre:
+    //pos: recarga la municion
+    void reloadAmmo();
     
 };
 
