@@ -362,7 +362,13 @@ int ronda::contarCartas(std::string nombre,TiposCarta_T tipo){
         {
             throw "error de continuidad de la lista";
         }       
-    }  
+    } 
+     
+    if (aux->getName() == nombre) // si el nombre coincide le digo que cuente las cartas
+    {
+        return int(aux->contarCartas(tipo));
+    }
+
     return 0;
 }
 

@@ -175,10 +175,10 @@ int jugador::getCardAmmo (){
     while (aux != NULL) // mientras tenga cartas las hago recargar
     {
         if (aux->getType() != soldado) // no cuento los soldados porque estos no dan ataques extra
-        {
+        {   
             ammo = ammo + aux->getAmmo();
-            aux = aux->getNext();
         }
+        aux = aux->getNext();
     } 
     return ammo;
 }
@@ -318,7 +318,7 @@ bool jugador::verificarCarta (std::vector<unsigned int> pos){
         {
             return true;
         }
-        
+        aux=aux->getNext();
     }
     return false;
 }

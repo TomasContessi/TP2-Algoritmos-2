@@ -213,6 +213,9 @@ bool batallaCampal::cardChoiceStage(){
     int coordenada;
     std::vector<unsigned int> pos;
 
+    cout << "se levanto una carta de tipo" << this->rondita->getCardType() << endl; 
+
+
     cout << this->mensaje.conservarCarta << endl; 
     cout << this->mensaje.Y_N << endl;
 
@@ -620,11 +623,11 @@ void batallaCampal::atacarPosicion(int AoE , std::vector<unsigned int> pos){
                     {
                         if (posDestruida[2] > 0 && posDestruida[2] < this->configuracion->getDimXYZ()[2])
                         {
-                            if (this->map->getStateCasilla(posDestruida) == ocupada) // si estaba ocupada
-                            {
+                            //if (this->map->getStateCasilla(posDestruida) == ocupada) // si estaba ocupada
+                            //{
                                 this->rondita->tirarCarta(this->map->getPropietario(posDestruida),posDestruida.data());
                                 this->map->attackCasilla(posDestruida);
-                            }
+                            //}
                             
                         }
                         
@@ -650,7 +653,7 @@ void batallaCampal::cargarIdioma(){
         this->mensaje.aunDeseaMover="Aun desea mover?";
         this->mensaje.aviones="aviones";
         this->mensaje.barcos="barcos";
-        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.0";
+        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.1";
         this->mensaje.cartaPosInvalid="Posicion invalida";
         this->mensaje.cartas="cartas";
         this->mensaje.casillaDestruida="casilla destruida";
