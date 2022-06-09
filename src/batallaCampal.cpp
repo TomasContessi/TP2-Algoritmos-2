@@ -298,6 +298,7 @@ bool batallaCampal::moveStage(std::vector<unsigned int> posA){
 
         this->map->leaveCasilla(posA);
         this->map->takeCasilla(posB,this->rondita->getJugadorEnTurno());
+        this->rondita->moverCarta(posA.data(),posB.data());
         break;
 
     case ocupada:
@@ -351,6 +352,8 @@ bool batallaCampal::targetStrikeStage(std::vector<unsigned int> posA){
         {
             return true;
         }
+
+        cout << "seleccione coordenadas del objetivo" << endl;
 
         while (this->ingresarPosicion(&posB) == false){}
 
@@ -424,15 +427,13 @@ bool batallaCampal::ingresarPosicion(std::vector<unsigned int> * pos){
     {
         cout << this->mensaje.ingreseCoordenada << " " << this->mensaje.coordenadas.data()[i] << endl;
 
-        cout << this->mensaje.Y_N << endl;
-
         cout << endl;
 
         cin >> entrada;
 
         cout << endl;
 
-        if (entrada > this->configuracion->getDimXYZ()[i])
+        if (entrada >= this->configuracion->getDimXYZ()[i])
         {
             cout << this->mensaje.coordenadaInvalida << endl;
             return false;
@@ -596,6 +597,14 @@ bool batallaCampal::verificarRange(int range,std::vector<unsigned int> posA,std:
 void batallaCampal::atacarPosicion(int AoE , std::vector<unsigned int> pos){    
     vector<unsigned int> posDestruida = pos;
 
+    if (AoE == 1)
+    {
+        this->rondita->tirarCarta(this->map->getPropietario(posDestruida),posDestruida.data());
+        this->map->attackCasilla(posDestruida);
+        return;
+    }
+    
+
     for (int x = 0; x < AoE; x++)
     {
         posDestruida[0] = pos[0] - AoE/2 + x; 
@@ -684,9 +693,15 @@ void batallaCampal::ejecutarTurno(){
 
     while (this->atackStage() == false){}
 
+    this->printPlayersScreens();
+
     while (this->regroupStage() == false){}
 
-    while (this->aditionalAtacksStage() == false){}
+    this->printPlayersScreens();
+
+    while (this->aditionalAtacksStage() == false){} // se traba aca
+
+    this->printPlayersScreens();
 
     this->rondita->tomarCarta();
 
@@ -724,6 +739,8 @@ void batallaCampal::iniciarPartida(){
         }
     }
 
+    cout << "etapa de preparacion terminada" << endl;
+   
     this->estado = jugando; // cuando se agregan todos los soldados termine de iniciar 
 }
 

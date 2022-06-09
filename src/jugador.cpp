@@ -227,6 +227,7 @@ TiposCarta_T jugador::getCardType (unsigned int pos []){
         return aux->getType();
     }
 
+    //return bomba_atomica;
     throw "no hay cartas en esa posicion";
     
 }

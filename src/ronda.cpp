@@ -219,7 +219,16 @@ EstadoJugador_T ronda::getPlayerState(std::string nombre){
         {
             throw "error de continuidad de la lista";
         }       
-    }  
+    } 
+
+    if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+    {
+        if(aux->contarCartas(soldado) < 1){
+            aux->setState(derrotado);
+        }
+        return aux->getState();
+    }
+
     return derrotado;
 }
 
@@ -320,8 +329,8 @@ void ronda::moverCarta(unsigned int posA[3] , unsigned int posB[3]){
 
     this->tomarCarta(tipo);
 
-    this->jugadorEnTurno->retirarCarta(posA);
-    this->jugadorEnTurno->agregarCarta(this->nuevaCarta);
+    this->tirarCarta(posA);
+    this->jugarCarta(posB);
 }
 
 //---------------------------------------------------------------------------------------------------------------------

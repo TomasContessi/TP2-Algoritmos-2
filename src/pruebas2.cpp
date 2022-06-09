@@ -25,6 +25,12 @@ int main(){
 
     juego->iniciarPartida();
 
+    while (juego->getState() == jugando)
+    {
+        juego->ejecutarTurno();
+    }
+    
+
     delete juego;
     return 0;
 }
