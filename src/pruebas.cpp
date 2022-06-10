@@ -20,7 +20,7 @@ using namespace std;
     mapa* mapita;
     ronda* rondita;
 
-    std::vector<unsigned int> dim ={21,21,1};
+    std::vector<int> dim ={21,21,1};
     BMP tablero;
 /*
     BMP tierra;
@@ -46,7 +46,7 @@ using namespace std;
     cout<<"starting..."<<endl;
     mapita= new mapa(rio,dim);
     rondita= new ronda;
-    std::vector<unsigned int> pos = {0,0,0};
+    std::vector<int> pos = {0,0,0};
 
     jugador* player= new jugador ("player_1");
 

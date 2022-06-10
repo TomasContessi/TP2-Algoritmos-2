@@ -6,7 +6,7 @@
 //                                  IMPLEMENTCION DE LA FUNCION PARA COMPARAR POSICIONES
 //---------------------------------------------------------------------------------------------------------------------
 
-bool compararPos(unsigned int pos1[3], unsigned int pos2[3]){
+bool compararPos(int pos1[3], int pos2[3]){
     for (int i = 0; i < 3; i++)
     {
         if (pos1[i] != pos2[i])

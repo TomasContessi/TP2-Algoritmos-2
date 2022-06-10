@@ -19,7 +19,7 @@ class gameConfig
 {
 private:
     int nJugadores; // cantidad de jugadores
-    std::vector<unsigned int> nCasillas; // dimension del tablero
+    std::vector<int> nCasillas; // dimension del tablero
     int nSoldados; //cantidad de soldados por jugador
     TipoMapa_T tipoMapa; // en cual de los mapas jugar
     std::vector<std::string>nombres; // los nombres de los jugadores
@@ -52,7 +52,7 @@ public:
 
     //pre:
     //pos:
-    std::vector<unsigned int> getDimXYZ ();
+    std::vector<int> getDimXYZ ();
 
     //pre:
     //pos:

@@ -20,7 +20,7 @@ class mapa
 private:
     casilla *seed;
     casilla *cursor;
-    std::vector<unsigned int> dimensionXYZ;
+    std::vector<int> dimensionXYZ;
     TipoMapa_T tipoMapa;
 
 
@@ -38,7 +38,7 @@ private:
 
     //pre:
     //pos: setea el tipo de las casillas del mapa para construir el mapa elegido
-    CasillaTipo_T setCasillaType(TipoMapa_T, std::vector<unsigned int> );
+    CasillaTipo_T setCasillaType(TipoMapa_T, std::vector<int> );
 
     //pre:
     //pos: hace un decrecimiento en z 
@@ -47,7 +47,7 @@ private:
 public:
     //pre:
     //pos: crea un mapa de las dimensiones especificadas y del tipo especificada
-    mapa(TipoMapa_T,std::vector<unsigned int>);
+    mapa(TipoMapa_T,std::vector<int>);
 
     //pre:
     //pos: elimina el mapa
@@ -55,31 +55,31 @@ public:
 
     //pre: que la casilla sea valida
     //pos: obtiene el estado de la casilla seleccionada
-    CasillaEstado_T getStateCasilla(std::vector<unsigned int>);
+    CasillaEstado_T getStateCasilla(std::vector<int>);
 
     //pre: que la casilla sea valida
     //pos: obtiene el tipo de la casilla seleccionada
-    CasillaTipo_T getTypeCasilla(std::vector<unsigned int>);
+    CasillaTipo_T getTypeCasilla(std::vector<int>);
 
     //pre: que la casilla sea valida
     //pos: devuelve el jugador propietario de la casilla
-    std::string getPropietario(std::vector<unsigned int>);
+    std::string getPropietario(std::vector<int>);
 
     //pre: que la casilla sea valida
     //pos: ataca la casilla seleccionada y elimina la carta que la ocupe
-    void attackCasilla(std::vector<unsigned int>);
+    void attackCasilla(std::vector<int>);
 
     //pre: que la casilla sea valida
     //pos: la unidad que se encuentre en la casilla la abandona
-    void leaveCasilla(std::vector<unsigned int>);
+    void leaveCasilla(std::vector<int>);
 
     //pre: que la casilla sea valida y que el jugador tambien
     //pos: el jugador toma la casilla seleccionada
-    void takeCasilla(std::vector<unsigned int>,std::string);
+    void takeCasilla(std::vector<int>,std::string);
 
     //pre:
     //pos:
-    bool verificarCasilla(std::vector<unsigned int>);
+    bool verificarCasilla(std::vector<int>);
 
     //pre:
     //pos:
@@ -115,15 +115,15 @@ public:
 
     //pre:
     //pos:
-    void jumpCursor(std::vector<unsigned int>);
+    void jumpCursor(std::vector<int>);
     
     //pre:
     //pos:
-    std::vector<unsigned int> getCursor();
+    std::vector<int> getCursor();
 
     //pre:
     //pos:
-    std::vector<unsigned int> getDim();
+    std::vector<int> getDim();
     
 };
 

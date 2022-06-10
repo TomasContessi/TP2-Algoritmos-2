@@ -20,7 +20,7 @@
 class casilla
 {
 private:
-    std::vector<unsigned int> posicionXYZ;
+    std::vector<int> posicionXYZ;
     CasillaEstado_T estado;
     std::string ocupante;
     CasillaTipo_T tipo;
@@ -49,7 +49,7 @@ public:
 
     //pre:
     //pos: devuelve la posicion de la casilla
-    std::vector<unsigned int> getPos();
+    std::vector<int> getPos();
 
     //pre:
     //pos: devuelve un puntero a la casilla qde arriba (z+)

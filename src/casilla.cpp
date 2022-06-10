@@ -78,7 +78,7 @@ bool casilla::verificarContinuidad(casilla* nueva,direccion_T dir){ // esta bien
 //                                            METODOS DE OBTENCION DE DATOS
 //---------------------------------------------------------------------------------------------------------------------
 
-std::vector<unsigned int> casilla::getPos(){
+std::vector<int> casilla::getPos(){
     return this->posicionXYZ;
 }
 

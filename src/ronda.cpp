@@ -265,7 +265,7 @@ TiposCarta_T ronda::tomarCarta(TiposCarta_T tipo){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void ronda::jugarCarta(unsigned int pos[3]){
+void ronda::jugarCarta(int pos[3]){
     this->nuevaCarta->setPos(pos);
     this->jugadorEnTurno->agregarCarta(this->nuevaCarta);
     this->nuevaCarta=NULL;
@@ -273,7 +273,7 @@ void ronda::jugarCarta(unsigned int pos[3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void ronda::tirarCarta(std::string nombre,unsigned int pos[3]){
+void ronda::tirarCarta(std::string nombre,int pos[3]){
     jugador* aux;
 
     aux= this->jugadores;   
@@ -304,7 +304,7 @@ void ronda::tirarCarta(std::string nombre,unsigned int pos[3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void ronda::tirarCarta(unsigned int pos[3]){
+void ronda::tirarCarta(int pos[3]){
     this->jugadorEnTurno->retirarCarta(pos);
 }
 
@@ -320,7 +320,7 @@ void ronda::tirarCarta(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void ronda::moverCarta(unsigned int posA[3] , unsigned int posB[3]){
+void ronda::moverCarta(int posA[3] , int posB[3]){
     TiposCarta_T tipo;
 
     tipo = this->jugadorEnTurno->getCardType(posA);
@@ -378,19 +378,19 @@ int ronda::contarCartas(TiposCarta_T tipo){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-CardStats ronda::getCardStats(unsigned int pos[3]){
+CardStats ronda::getCardStats(int pos[3]){
     return this->jugadorEnTurno->getCardStats(pos);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-TiposCarta_T ronda::getCardType(unsigned int pos[3]){
+TiposCarta_T ronda::getCardType(int pos[3]){
     return this->jugadorEnTurno->getCardType(pos);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-TiposCarta_T ronda::getCardType(std::string nombre,unsigned int pos[3]){
+TiposCarta_T ronda::getCardType(std::string nombre,int pos[3]){
     jugador* aux;
     TiposCarta_T tipo;
 
@@ -436,18 +436,18 @@ TiposCarta_T ronda::getCardType(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool ronda::verificarCartaExistente(std::vector<unsigned int> pos){
+bool ronda::verificarCartaExistente(std::vector<int> pos){
     return this->jugadorEnTurno->verificarCarta(pos);    
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-int ronda::getCardAmmo(unsigned int pos[3]){
+int ronda::getCardAmmo(int pos[3]){
     return this->jugadorEnTurno->getCardAmmo(pos);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
-int ronda::shoot(unsigned int pos[3]){
+int ronda::shoot(int pos[3]){
     return this->jugadorEnTurno->shoot(pos);
 }

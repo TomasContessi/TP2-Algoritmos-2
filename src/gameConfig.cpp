@@ -54,7 +54,7 @@ int gameConfig::getTroopsNumber(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-std::vector<unsigned int> gameConfig::getDimXYZ (){
+std::vector<int> gameConfig::getDimXYZ (){
     return this->nCasillas;
 }
 

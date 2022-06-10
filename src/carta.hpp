@@ -29,7 +29,7 @@ private:
 
     int municionRestante;
 
-    unsigned int posicion [3]; // posicion de la carta en el tablero
+    int posicion [3]; // posicion de la carta en el tablero
 
     carta* siguienteCarta; // siguiente carta de la lista
 
@@ -58,9 +58,9 @@ public:
     //pos: carga el puntero pasado en el valor next
     void setNext (carta*);
 
-    //pre: la posicion debe ser un vector de 3 unsigned int
+    //pre: la posicion debe ser un vector de 3 int
     //pos: carga el estado a la carta
-    void setPos (unsigned int [3]);
+    void setPos (int [3]);
 
     //pre:
     //pos: devuelve el tipo de carta
@@ -84,7 +84,7 @@ public:
 
     //pre:
     //pos: devuelve la posicion de la carta en el mapa
-    unsigned int* getPos();
+    int* getPos();
 
     //pre:
     //pos: devuelve las estadisticas de la carta

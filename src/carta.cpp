@@ -148,7 +148,7 @@ void carta::setNext(carta* siguiente){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void carta::setPos (unsigned int pos[]){
+void carta::setPos (int pos[]){
     if (pos == NULL)
     {
         throw "posicion invalida para la carga";
@@ -217,7 +217,7 @@ carta* carta::getNext(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-unsigned int* carta::getPos(){
+int* carta::getPos(){
     return this->posicion;
 }
 

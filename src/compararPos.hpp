@@ -9,6 +9,6 @@
 //                                   DEFINICION DE LA FUNCION PARA COMPARAR POSICIONES
 //---------------------------------------------------------------------------------------------------------------------
 
-bool compararPos(unsigned int [3], unsigned int [3]);
+bool compararPos(int [3], int [3]);
 
 #endif /* COMPARAR_POS_H */

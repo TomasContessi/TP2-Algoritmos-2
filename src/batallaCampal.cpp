@@ -9,9 +9,9 @@ using namespace std;
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
+//--------------------------------------------      BATALLA CAMPAL 2      ---------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-//                                       IMPLEMENTACION DE LA CLASE BATALLA CAMPAL
+//                                    IMPLEMENTACION DE LA CLASE BATALLA CAMPAL V2.4
 //---------------------------------------------------------------------------------------------------------------------
 
 
@@ -143,7 +143,7 @@ bool batallaCampal::playerReady(){
 //---------------------------------------------------------------------------------------------------------------------
 
 bool batallaCampal::atackStage(){
-    std::vector<unsigned int> pos;
+    std::vector<int> pos;
     string entrada;
 
     cout << this->mensaje.deseaAtacar << endl; 
@@ -155,7 +155,7 @@ bool batallaCampal::atackStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N") // si no se desea atacar retorno operacion exitosa y vuelvo
+    if (entrada != "y" && entrada != "Y") // si no se desea atacar retorno operacion exitosa y vuelvo
     {
         return true;
     }
@@ -177,7 +177,7 @@ bool batallaCampal::atackStage(){
 
 bool batallaCampal::regroupStage(){
     string entrada;
-    std::vector<unsigned int> pos;
+    std::vector<int> pos;
 
     cout << this->mensaje.deseaMover << endl; 
     cout << this->mensaje.Y_N << endl;
@@ -188,7 +188,7 @@ bool batallaCampal::regroupStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+    if (entrada != "y" && entrada != "Y") // si no se desea mover retorno operacion exitosa
     {
         return true;
     }
@@ -211,9 +211,9 @@ bool batallaCampal::regroupStage(){
 bool batallaCampal::cardChoiceStage(){
     string entrada;
     int coordenada;
-    std::vector<unsigned int> pos;
+    std::vector<int> pos;
 
-    cout << "se levanto una carta de tipo" << this->rondita->getCardType() << endl; 
+    cout << "se levanto una carta de tipo" << " " << this->mensaje.tiposDeCartas[this->rondita->getCardType()] << endl; 
 
 
     cout << this->mensaje.conservarCarta << endl; 
@@ -225,7 +225,7 @@ bool batallaCampal::cardChoiceStage(){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N") // pregunto si se desea la carta y si no la tiro y devuelvo operacion exitosa
+    if (entrada != "y" && entrada != "Y") // pregunto si se desea la carta y si no la tiro y devuelvo operacion exitosa
     {
         this->rondita->tirarCarta();
         return true;
@@ -246,15 +246,47 @@ bool batallaCampal::cardChoiceStage(){
         return false;
     }
 
-    this->rondita->jugarCarta(pos.data()); // si si se podia la agrego a la partida y retorno que la operacion fue exitosa
-    this->map->takeCasilla(pos,this->rondita->getJugadorEnTurno());
+    switch (this->map->getStateCasilla(pos))
+    {
+    case libre:
+        cout << this->mensaje.moviendoTropas << endl;
+        cout << endl;
+
+
+        this->rondita->jugarCarta(pos.data()); // si si se podia la agrego a la partida y retorno que la operacion fue exitosa
+        this->map->takeCasilla(pos,this->rondita->getJugadorEnTurno());
+        break;
+
+    case ocupada:
+        cout << this->mensaje.casillaOcupada << endl;
+        cout << this->mensaje.tropasPerdidas << endl;
+        cout << endl;
+
+        this->rondita->tirarCarta(); // el jugador en turno pierde su carta
+
+        this->map->leaveCasilla(pos);
+        this->rondita->tirarCarta(this->map->getPropietario(pos),pos.data()); // el otro jugador tambien pierde la suya
+        break;
+
+    case destruida:
+        cout << this->mensaje.casillaDestruida << endl;
+        cout << this->mensaje.tropasPerdidas << endl;
+        cout << endl;
+
+        this->rondita->tirarCarta(); // el jugador en turno pierde su carta
+        break;
+    
+    default:
+        throw "estado invalido";
+        break;
+    }
     return true;
 }
 
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::cardSelectionStage(std::vector<unsigned int>* pos){
+bool batallaCampal::cardSelectionStage(std::vector<int>* pos){
 
     cout << this->mensaje.elegirCarta << endl; 
     while (this->ingresarPosicion(pos) == false){}
@@ -263,10 +295,10 @@ bool batallaCampal::cardSelectionStage(std::vector<unsigned int>* pos){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::moveStage(std::vector<unsigned int> posA){
+bool batallaCampal::moveStage(std::vector<int> posA){
 
     string entrada;
-    std::vector<unsigned int> posB;
+    std::vector<int> posB;
 
     cout << this->mensaje.aunDeseaMover << endl; 
     cout << this->mensaje.Y_N << endl;
@@ -277,7 +309,7 @@ bool batallaCampal::moveStage(std::vector<unsigned int> posA){
 
     cout << endl;
 
-    if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+    if (entrada != "y" && entrada != "Y") // si no se desea mover retorno operacion exitosa
     {
         return true;
     }
@@ -335,9 +367,9 @@ bool batallaCampal::moveStage(std::vector<unsigned int> posA){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::targetStrikeStage(std::vector<unsigned int> posA){
+bool batallaCampal::targetStrikeStage(std::vector<int> posA){
     string entrada;
-    std::vector<unsigned int> posB;
+    std::vector<int> posB;
 
     while (this->rondita->getCardAmmo(posA.data()) > 0)
     {
@@ -351,7 +383,7 @@ bool batallaCampal::targetStrikeStage(std::vector<unsigned int> posA){
 
         cout << endl;
 
-        if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+        if (entrada != "y" && entrada != "Y") // si no se desea mover retorno operacion exitosa
         {
             return true;
         }
@@ -378,10 +410,10 @@ bool batallaCampal::targetStrikeStage(std::vector<unsigned int> posA){
 
 bool batallaCampal::aditionalAtacksStage(){
     string entrada;
-    std::vector<unsigned int> pos;
+    std::vector<int> pos;
     while (this->rondita->getTotalAmmo() > 0)
     {
-        cout << this->rondita->getTotalAmmo() << this->mensaje.municionesRestantes << endl;
+        cout << this->rondita->getTotalAmmo() << " " << this->mensaje.municionesRestantes << endl;
         cout << this->mensaje.deseaAtacar << endl; 
         cout << this->mensaje.Y_N << endl;
 
@@ -391,7 +423,7 @@ bool batallaCampal::aditionalAtacksStage(){
 
         cout << endl;
 
-        if (entrada == "n" || entrada == "N") // si no se desea mover retorno operacion exitosa
+        if (entrada != "y" && entrada != "Y") // si no se desea mover retorno operacion exitosa
         {
             return true;
         }
@@ -421,8 +453,8 @@ bool batallaCampal::aditionalAtacksStage(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::ingresarPosicion(std::vector<unsigned int> * pos){
-    unsigned int entrada;
+bool batallaCampal::ingresarPosicion(std::vector<int> * pos){
+    int entrada;
 
     (*pos).resize(3);
 
@@ -455,13 +487,13 @@ void batallaCampal::buryBodies(){
         {
             this->rondita->eliminarJugador(this->configuracion->getPlayerNames()[i]);
         }       
-    }    
+    }       
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 
 bool batallaCampal::ejecuarMecanica(){// estos recorridos pueden tomar un tiempo si el mapa es demasiado grande
-    std::vector<unsigned int> pos={0,0,0};
+    std::vector<int> pos={0,0,0};
     switch (this->rondita->getCardType())
     {
     case terremoto:
@@ -536,7 +568,7 @@ bool batallaCampal::ejecuarMecanica(){// estos recorridos pueden tomar un tiempo
 }
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<unsigned int> pos){
+bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<int> pos){
     CasillaTipo_T casilla;
     casilla = this->map->getTypeCasilla(pos);
     carta* cartaModelo = new carta(this->rondita->getJugadorEnTurno(),tipo); // asi no tengo que buscar la carta en particular en la mano del jugador
@@ -554,7 +586,7 @@ bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<unsigne
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<unsigned int> posA,std::vector<unsigned int> posB){
+bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<int> posA,std::vector<int> posB){
     CasillaTipo_T casilla;
     CasillaTipo_T casilla2;
     int dist;
@@ -582,7 +614,7 @@ bool batallaCampal::verificarPosicionCarta(TiposCarta_T tipo,std::vector<unsigne
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool batallaCampal::verificarRange(int range,std::vector<unsigned int> posA,std::vector<unsigned int> posB){
+bool batallaCampal::verificarRange(int range,std::vector<int> posA,std::vector<int> posB){
     int dist;
     for (int i = 0; i < 3; i++)
     {
@@ -597,15 +629,15 @@ bool batallaCampal::verificarRange(int range,std::vector<unsigned int> posA,std:
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void batallaCampal::atacarPosicion(int AoE , std::vector<unsigned int> pos){    
-    vector<unsigned int> posDestruida = pos;
+void batallaCampal::atacarPosicion(int AoE , std::vector<int> pos){    
+    vector<int> posDestruida = pos;
 
-    if (AoE == 1)
-    {
-        this->rondita->tirarCarta(this->map->getPropietario(posDestruida),posDestruida.data());
-        this->map->attackCasilla(posDestruida);
-        return;
-    }
+    //if (AoE == 1)
+    //{
+    //    this->rondita->tirarCarta(this->map->getPropietario(posDestruida),posDestruida.data());
+    //    this->map->attackCasilla(posDestruida);
+    //    return;
+    //}
     
 
     for (int x = 0; x < AoE; x++)
@@ -617,18 +649,17 @@ void batallaCampal::atacarPosicion(int AoE , std::vector<unsigned int> pos){
             for (int z = 0; z < AoE; z++)
             {
                 posDestruida[2] = pos[2] - AoE/2 + z;
-                if (posDestruida[0] > 0 && posDestruida[0] < this->configuracion->getDimXYZ()[0]) // si la casilla esta dentro del mapa
+                if (posDestruida[0] >= 0 && posDestruida[0] < this->configuracion->getDimXYZ()[0]) // si la casilla esta dentro del mapa
                 {
-                    if (posDestruida[1] > 0 && posDestruida[1] < this->configuracion->getDimXYZ()[1])
+                    if (posDestruida[1] >= 0 && posDestruida[1] < this->configuracion->getDimXYZ()[1])
                     {
-                        if (posDestruida[2] > 0 && posDestruida[2] < this->configuracion->getDimXYZ()[2])
+                        if (posDestruida[2] >= 0 && posDestruida[2] < this->configuracion->getDimXYZ()[2])
                         {
                             //if (this->map->getStateCasilla(posDestruida) == ocupada) // si estaba ocupada
                             //{
                                 this->rondita->tirarCarta(this->map->getPropietario(posDestruida),posDestruida.data());
                                 this->map->attackCasilla(posDestruida);
                             //}
-                            
                         }
                         
                     }
@@ -642,10 +673,14 @@ void batallaCampal::atacarPosicion(int AoE , std::vector<unsigned int> pos){
     }  
 
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+//                                                  SELECTOR DE IDIOMA
 //---------------------------------------------------------------------------------------------------------------------
 
 void batallaCampal::cargarIdioma(){
     this->mensaje.coordenadas.resize(3);
+    this->mensaje.tiposDeCartas.resize(9);
     if (this->configuracion->getLanguage() == "esp") // deberia haber ido cargando los mensajes mientras los iba precisando porque ahora no me acuerdo para que se usaba c/u
     {
         this->mensaje.ataqueExitoso="Ataque exitoso";
@@ -664,6 +699,15 @@ void batallaCampal::cargarIdioma(){
         this->mensaje.coordenadas[0]="X";
         this->mensaje.coordenadas[1]="Y";
         this->mensaje.coordenadas[2]="Z";
+        this->mensaje.tiposDeCartas[misil]="misil";
+        this->mensaje.tiposDeCartas[avion]="avion";
+        this->mensaje.tiposDeCartas[barco]="barco";
+        this->mensaje.tiposDeCartas[bomba_atomica]="bomba atomica";
+        this->mensaje.tiposDeCartas[dirigible]="dirigible";
+        this->mensaje.tiposDeCartas[ciclon]="ciclon";
+        this->mensaje.tiposDeCartas[terremoto]="terremoto";
+        this->mensaje.tiposDeCartas[tsunami]="tsunami";
+        this->mensaje.tiposDeCartas[soldado]="soldado";
         this->mensaje.deseaAtacar="Desea realizar un ataque?";
         this->mensaje.deseaMover="Desea mover una carta?";
         this->mensaje.dirigibles="dirigibles";
@@ -674,9 +718,54 @@ void batallaCampal::cargarIdioma(){
         this->mensaje.misiles="misiles";
         this->mensaje.moviendoTropas="Moviendo tropas";
         this->mensaje.municionesRestantes="Municiones restantes";
-        this->mensaje.noSoldados="no soldados (no me acuerdo del contexto donde use esto)";
+        this->mensaje.noSoldados="los soldados no dan ataques extra";
         this->mensaje.soldados="soldados";
         this->mensaje.tropasPerdidas="Tropas perdidas";
+        this->mensaje.Y_N="Y/N";
+
+        return;
+    }
+
+    if (this->configuracion->getLanguage() == "eng")
+    {
+        this->mensaje.ataqueExitoso="Atack complete";
+        this->mensaje.aunDeseaAtacar="Still want to atack?";
+        this->mensaje.aunDeseaMover="Still want to move?";
+        this->mensaje.aviones="aviones";
+        this->mensaje.barcos="barcos";
+        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.1";
+        this->mensaje.cartaPosInvalid="Invalid position";
+        this->mensaje.cartas="cards";
+        this->mensaje.casillaDestruida="destroyed box";
+        this->mensaje.casillaInvalida="invalid box";
+        this->mensaje.casillaOcupada="occupied box";
+        this->mensaje.conservarCarta="Want to keep this card?";
+        this->mensaje.coordenadaInvalida="invalid coordinate";
+        this->mensaje.coordenadas[0]="X";
+        this->mensaje.coordenadas[1]="Y";
+        this->mensaje.coordenadas[2]="Z";
+        this->mensaje.tiposDeCartas[misil]="rocket";
+        this->mensaje.tiposDeCartas[avion]="plane";
+        this->mensaje.tiposDeCartas[barco]="ship";
+        this->mensaje.tiposDeCartas[bomba_atomica]="atomic bomb";
+        this->mensaje.tiposDeCartas[dirigible]="zeppelin";
+        this->mensaje.tiposDeCartas[ciclon]="ciclon";
+        this->mensaje.tiposDeCartas[terremoto]="earth quake";
+        this->mensaje.tiposDeCartas[tsunami]="tsunami";
+        this->mensaje.tiposDeCartas[soldado]="soiler";
+        this->mensaje.deseaAtacar="Want to atack?";
+        this->mensaje.deseaMover="Want to move a card?";
+        this->mensaje.dirigibles="dirigibles";
+        this->mensaje.elegirCarta="Chose a card";
+        this->mensaje.ingreseCoordenada="enter a coordinate";
+        this->mensaje.ingreseNombre="Ingresar Nombre (esto lo use?)";
+        this->mensaje.listo="Ready?";
+        this->mensaje.misiles="misiles";
+        this->mensaje.moviendoTropas="Moving troops";
+        this->mensaje.municionesRestantes="remaining ammo";
+        this->mensaje.noSoldados="the soilders cant make an extra attack";
+        this->mensaje.soldados="soldados";
+        this->mensaje.tropasPerdidas="lost troops";
         this->mensaje.Y_N="Y/N";
 
         return;
@@ -698,13 +787,34 @@ void batallaCampal::ejecutarTurno(){
 
     this->printPlayersScreens();
 
+    this->buryBodies();
+
+    if (this->getState() == terminada)
+    {
+        return;
+    }
+    
     while (this->regroupStage() == false){}
 
     this->printPlayersScreens();
 
-    while (this->aditionalAtacksStage() == false){} // se traba aca
+    this->buryBodies();
+
+    if (this->getState() == terminada)
+    {
+        return;
+    }
+
+    while (this->aditionalAtacksStage() == false){} 
 
     this->printPlayersScreens();
+
+    this->buryBodies();
+
+    if (this->getState() == terminada)
+    {
+        return;
+    }
 
     this->rondita->tomarCarta();
 
@@ -744,7 +854,8 @@ void batallaCampal::iniciarPartida(){
 
     cout << "etapa de preparacion terminada" << endl;
    
-    this->estado = jugando; // cuando se agregan todos los soldados termine de iniciar 
+    this->estado = jugando; // cuando se agregan todos los soldados termine de iniciar
+    this->buryBodies();
 }
 
 //---------------------------------------------------------------------------------------------------------------------

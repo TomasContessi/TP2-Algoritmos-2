@@ -52,6 +52,7 @@ struct mensaje_t // aca voy a ir cargando los mensajes que voy a mostrar por con
     std::string conservarCarta;
     std::string ingreseCoordenada;
     std::vector<std::string> coordenadas;
+    std::vector<std::string> tiposDeCartas;
     std::string coordenadaInvalida;
     std::string cartaPosInvalid;
     std::string elegirCarta;
@@ -120,15 +121,15 @@ private:
 
     //pre
     //pos
-    bool cardSelectionStage(std::vector<unsigned int>*);//
+    bool cardSelectionStage(std::vector<int>*);//
 
     //pre
     //pos
-    bool targetStrikeStage(std::vector<unsigned int>);//
+    bool targetStrikeStage(std::vector<int>);//
 
     //pre
     //pos
-    bool moveStage(std::vector<unsigned int>);//
+    bool moveStage(std::vector<int>);//
 
     //pre
     //pos
@@ -136,19 +137,19 @@ private:
 
     //pre
     //pos
-    bool ingresarPosicion(std::vector<unsigned int>*);//
+    bool ingresarPosicion(std::vector<int>*);//
 
     //pre
     //pos
-    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int>);//
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<int>);//
 
     //pre
     //pos
-    bool verificarPosicionCarta(TiposCarta_T,std::vector<unsigned int> posA,std::vector<unsigned int> posB);//
+    bool verificarPosicionCarta(TiposCarta_T,std::vector<int> posA,std::vector<int> posB);//
 
     //pre
     //pos
-    bool verificarRange(int range,std::vector<unsigned int> posA,std::vector<unsigned int> posB);//
+    bool verificarRange(int range,std::vector<int> posA,std::vector<int> posB);//
 
     //pre
     //pos
@@ -156,7 +157,7 @@ private:
 
     //pre
     //pos
-    void atacarPosicion(int Aoe , std::vector<unsigned int> pos);//
+    void atacarPosicion(int Aoe , std::vector<int> pos);//
 
     //pre
     //pos

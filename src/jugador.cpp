@@ -48,7 +48,7 @@ void jugador::agregarCarta(carta* nueva){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void jugador::retirarCarta(unsigned int posVieja []){
+void jugador::retirarCarta(int posVieja []){
     carta* aux;
     carta* aux2;
 
@@ -86,9 +86,9 @@ void jugador::retirarCarta(unsigned int posVieja []){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-unsigned int jugador::contarCartas(TiposCarta_T tipo){
+int jugador::contarCartas(TiposCarta_T tipo){
     carta* aux;
-    unsigned int cuenta=0;
+    int cuenta=0;
 
     aux=this->cartas; 
 
@@ -107,7 +107,7 @@ unsigned int jugador::contarCartas(TiposCarta_T tipo){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-CardStats jugador::getCardStats (unsigned int pos []){
+CardStats jugador::getCardStats (int pos []){
     carta* aux;
     CardStats empy_stats;
 
@@ -134,7 +134,7 @@ CardStats jugador::getCardStats (unsigned int pos []){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-int jugador::getCardAmmo (unsigned int pos []){
+int jugador::getCardAmmo (int pos []){
     carta* aux;
     CardStats empy_stats;
 
@@ -185,7 +185,7 @@ int jugador::getCardAmmo (){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-int jugador::shoot(unsigned int pos[3]){
+int jugador::shoot(int pos[3]){
     carta* aux;
     if (this->cartas==NULL)
     {
@@ -207,7 +207,7 @@ int jugador::shoot(unsigned int pos[3]){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-TiposCarta_T jugador::getCardType (unsigned int pos []){
+TiposCarta_T jugador::getCardType (int pos []){
     carta* aux;
 
     if (this->cartas==NULL)
@@ -234,7 +234,7 @@ TiposCarta_T jugador::getCardType (unsigned int pos []){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-void jugador::reloadCardAmmo (unsigned int pos []){
+void jugador::reloadCardAmmo (int pos []){
     carta* aux;
     if (this->cartas==NULL)
     {
@@ -308,7 +308,7 @@ jugador* jugador::getSig(){
 
 //---------------------------------------------------------------------------------------------------------------------
 
-bool jugador::verificarCarta (std::vector<unsigned int> pos){
+bool jugador::verificarCarta (std::vector<int> pos){
     carta* aux;
 
     aux=this->cartas;

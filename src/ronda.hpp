@@ -69,15 +69,15 @@ public:
 
     //pre:
     //pos: el jugado en turno posiciona en su mano la nueva carta que tomo
-    void jugarCarta(unsigned int [3]);
+    void jugarCarta(int [3]);
 
     //pre:
     //pos: el jugador especificado tira la carta especificada
-    void tirarCarta(std::string,unsigned int [3]);
+    void tirarCarta(std::string,int [3]);
 
     //pre:
     //pos: el jugado en turno tira la carta especificada
-    void tirarCarta(unsigned int [3]);
+    void tirarCarta(int [3]);
 
     //pre:
     //pos: el jugador en turno devuelve la carta que aun no jugo
@@ -85,7 +85,7 @@ public:
 
     //pre:
     //pos: el jugador en turno mueve una carta de la posicion A a la B
-    void moverCarta(unsigned int posA[3] , unsigned int posB[3]);
+    void moverCarta(int posA[3] , int posB[3]);
 
     //pre:
     //pos: el jugador especificado cuenta la cantidad de cartas de cierto tipo
@@ -97,11 +97,11 @@ public:
 
     //pre:
     //pos: el jugador en turno lee las stats de la carta en cierta posicion
-    CardStats getCardStats(unsigned int [3]);
+    CardStats getCardStats(int [3]);
 
     //pre:
     //pos: devuelve la municion restante de la carta especifica del jugador en turno
-    int getCardAmmo(unsigned int [3]);
+    int getCardAmmo(int [3]);
 
     //pre:
     //pos: devuelve toda la municion restante del jgador en turno
@@ -113,15 +113,15 @@ public:
 
     //pre:
     //pos: el municion efectua un disparo con la carta especificada
-    int shoot(unsigned int [3]);
+    int shoot(int [3]);
 
     //pre:
     //pos: el jugador en turno lee el tipo de carta en la posicion especifica
-    TiposCarta_T getCardType(unsigned int [3]);
+    TiposCarta_T getCardType(int [3]);
 
     //pre:
     //pos: el jugador en turno lee el tipo de carta en la posicion especifica
-    TiposCarta_T getCardType(std::string,unsigned int [3]);
+    TiposCarta_T getCardType(std::string,int [3]);
 
     //pre:
     //pos: el jugador en turno lee el tipo de carta que tiene en la mano sin jugar
@@ -133,7 +133,7 @@ public:
 
     //pre:
     //pos:
-    bool verificarCartaExistente(std::vector<unsigned int>);
+    bool verificarCartaExistente(std::vector<int>);
 };
 
 

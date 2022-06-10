@@ -42,7 +42,7 @@ public:
 
     //pre:
     //pos: retira la carta de la pila del jugador
-    void retirarCarta(unsigned int [3]);
+    void retirarCarta(int [3]);
 
     //pre:
     //pos: establece el jugador pasado como argumento como el siguiente del actual
@@ -66,23 +66,23 @@ public:
 
     //pre:
     //pos: cuenta la cantidad de cartas de un tipo que tiene el jugador
-    unsigned int contarCartas(TiposCarta_T);
+    int contarCartas(TiposCarta_T);
 
     //pre:
     //pos: devuelve el tipo de carta que el jugador tiene en la posicion especifica
-    TiposCarta_T getCardType (unsigned int [3]);
+    TiposCarta_T getCardType (int [3]);
 
     //pre:
     //pos: devuelve las stats de la carta que el jugador tiene en la casilla especificada
-    CardStats getCardStats (unsigned int [3]);
+    CardStats getCardStats (int [3]);
     
     //pre:
     //pos: devuelve la municion restante de la carta que el jugador tiene en la casilla especificada
-    int getCardAmmo (unsigned int [3]);
+    int getCardAmmo (int [3]);
 
     //pre:
     //pos: hace un disparo y devuelve la municion restante de la carta que el jugador tiene en la casilla especificada
-    int shoot (unsigned int [3]);
+    int shoot (int [3]);
 
     //pre:
     //pos: devuelve toda la municion restante
@@ -90,7 +90,7 @@ public:
 
     //pre:
     //pos: recarga la municion de la carta que el jugador tiene en la casilla especificada
-    void reloadCardAmmo (unsigned int [3]);
+    void reloadCardAmmo (int [3]);
 
     //pre:
     //pos: recarga toda la municion
@@ -98,7 +98,7 @@ public:
 
     //pre:
     //pos:
-    bool verificarCarta (std::vector<unsigned int> pos);
+    bool verificarCarta (std::vector<int> pos);
     
 };
 
