@@ -84,6 +84,16 @@ void mapa::xGrow(){
                 nueva->setS(this->cursor->getS()->getE());// si tengo una capa al sur conecto la nueva con la que esta al sur
             }
 
+            if (this->cursor->getSup()!=NULL)
+            {
+                nueva->setSup(this->cursor->getSup()->getE());// si tengo una capa abajo conecto la nueva con la que esta abajo
+            }
+
+            if (this->cursor->getN()!=NULL)
+            {
+                nueva->setN(this->cursor->getN()->getE());// si tengo una capa al sur conecto la nueva con la que esta al sur
+            }
+
             // una vez conectada la nueva casilla avanzo 1 en z el cursor
         }while(this->avanzarCursorZ());
 
@@ -126,6 +136,16 @@ void mapa::yGrow(){
                 nueva->setW(this->cursor->getW()->getN());// si tengo una capa al oeste conecto la nueva con la que esta al oeste
             }
 
+            if (this->cursor->getSup()!=NULL)
+            {
+                nueva->setSup(this->cursor->getSup()->getN());// si tengo una capa abajo conecto la nueva con la que esta abajo
+            }
+
+            if (this->cursor->getE()!=NULL)
+            {
+                nueva->setE(this->cursor->getE()->getN());// si tengo una capa al oeste conecto la nueva con la que esta al oeste
+            }
+
             // una vez conectada la nueva casilla avanzo 1 en z el cursor
         }while(this->avanzarCursorZ());
 
@@ -156,7 +176,7 @@ void mapa::zGrow(){
             std::vector<int>  nuevaPosicion = this->cursor->getPos();
             nuevaPosicion[2]++;
             nueva= new casilla(this->setCasillaType(this->tipoMapa,nuevaPosicion)); //creo una nueva casilla
-            nueva->setInf(this->cursor); //conecto la nueva casilla con el cursor al sur
+            nueva->setInf(this->cursor); //conecto la nueva casilla con el cursor abajo
 
             if (this->cursor->getS()!=NULL)
             {
@@ -168,12 +188,22 @@ void mapa::zGrow(){
                 nueva->setW(this->cursor->getW()->getSup());// si tengo una capa a la izquierda conecto la nueva con la que esta a la izquierda
             }
 
+            if (this->cursor->getN()!=NULL)
+            {
+                nueva->setN(this->cursor->getN()->getSup());// si tengo una capa al sur conecto la nueva con la que esta al sur
+            }
+
+            if (this->cursor->getE()!=NULL)
+            {
+                nueva->setE(this->cursor->getE()->getSup());// si tengo una capa a la izquierda conecto la nueva con la que esta a la izquierda
+            }
+
             // una vez conectada la nueva casilla avanzo 1 en x el cursor
         }while(this->avanzarCursorX());
 
         // una vez avanzado todo el cursor en z avanzo 1 en y
 
-        while(this->cursor->getInf()!=NULL)
+        while(this->cursor->getW()!=NULL)
         {
             this->retrocederCursorX(); // y devuelvo el carro a x=0
         }

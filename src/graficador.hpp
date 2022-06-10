@@ -2,6 +2,7 @@
 #define GRAFICADOR_H
 
 #include <vector>
+#include <sstream>
 
 #include "EasyBMP.h"
 
@@ -12,9 +13,9 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
+//--------------------------------------------      BATALLA CAMPAL 2      ---------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-//                                         DEFINICION DE LA CLASE GRAFICADOR
+//                                       DEFINICION DE LA CLASE GRAFICADOR V2.3
 //---------------------------------------------------------------------------------------------------------------------
 
 class graficador
@@ -33,6 +34,8 @@ private:
     std::string rutaGraficas;
 
     bool mapaVisible;
+
+    int lvl;
 
 
 
@@ -60,6 +63,10 @@ private:
     //pos:
     BMP imgSelector(TiposCarta_T);
 
+    //pre:
+    //pos: grafica la pantalla que ve el jugador especificado
+    void graficarNivel(std::string);
+
     public:
 
     //pre:
@@ -72,7 +79,7 @@ private:
 
     //pre:
     //pos: grafica la pantalla que ve el jugador especificado
-    void graficarPantalla(std::string);
+    void graficarPantalla(std::string, int niveles);
 
     //pre:
     //pos: selecciona la ruta donde se van a buscar las graficas

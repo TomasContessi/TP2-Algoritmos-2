@@ -1,11 +1,12 @@
+#include <sstream>
 #include "graficador.hpp"
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
+//--------------------------------------------      BATALLA CAMPAL 2      ---------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-//                                       IMPLEMENTACION DE LA CLASE GRAFICADOR
+//                                     IMPLEMENTACION DE LA CLASE GRAFICADOR V2.3
 //---------------------------------------------------------------------------------------------------------------------
 
 
@@ -21,6 +22,7 @@ graficador::graficador(mapa* map,ronda* ronda)
     this->rutaGraficas="";
     this->rutaSalida="";
     this->mapaVisible=false;
+    this->lvl = 0;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -51,6 +53,12 @@ void graficador::construirTablero(){
     imagen.SetSize(res,res);
 
     this->mapita->iniciarCursor();
+
+    for (int i = 1; i < this->lvl; i++)
+    {
+        this->mapita->avanzarCursorZ(); //levanto el cursor hasta el nivel que quiero graficar
+    }
+    
 
     do // para toda la dimension x
     {   
@@ -126,6 +134,11 @@ void graficador::agregarCartas(){
     imagen.SetSize(res,res);
 
     this->mapita->iniciarCursor();
+
+    for (int i = 1; i < this->lvl; i++)
+    {
+        this->mapita->avanzarCursorZ(); //levanto el cursor hasta el nivel que quiero graficar
+    }
 
     do // para toda la dimension x
     {   
@@ -341,14 +354,28 @@ void graficador::cargarMapa(mapa* map,ronda* ronda){
 //                                                METODOS PARA GRAFICAR
 //---------------------------------------------------------------------------------------------------------------------
 
-void graficador::graficarPantalla(std::string nombre){
+void graficador::graficarPantalla(std::string nombre,int niveles){
+    std::stringstream path;
+    this->observador=nombre;
+    
+    for (this->lvl = 1; this->lvl < niveles + 1; this->lvl ++)
+    {
+        path.str("");
+        path.clear();
+        path << nombre << "_nivel_" << this->lvl;
+        this->graficarNivel(path.str());
+    }
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+
+void graficador::graficarNivel(std::string nombre){
     std::string ruta;
     std::string extencion= ".bmp";
     
     ruta=this->rutaSalida;
     ruta+=nombre;
     ruta+=extencion;
-    this->observador=nombre;
 
     this->construirTablero();
     this->agregarCartas();
@@ -356,3 +383,4 @@ void graficador::graficarPantalla(std::string nombre){
 
     this->pantalla.WriteToFile(ruta.c_str());
 }
+

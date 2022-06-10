@@ -21,6 +21,8 @@ using namespace std;
 
 int main(){
     batallaCampal * juego;
+
+    cout << "iniciando" << endl;
     juego=new batallaCampal();
 
     juego->iniciarPartida();
@@ -29,7 +31,7 @@ int main(){
     {
         juego->ejecutarTurno();
     }
-    
+    cout << "terminado" << endl;
 
     delete juego;
     return 0;
