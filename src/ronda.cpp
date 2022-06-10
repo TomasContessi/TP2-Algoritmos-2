@@ -3,9 +3,9 @@
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.1-------------------------------------------------
+//---------------------------------------------    BATALLA CAMPAL 2    ------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-//                                          IMPLEMENTACION DE LA CLASE RONDA
+//                                       IMPLEMENTACION DE LA CLASE RONDA V2.2
 //---------------------------------------------------------------------------------------------------------------------
 
 
@@ -276,20 +276,11 @@ void ronda::jugarCarta(unsigned int pos[3]){
 void ronda::tirarCarta(std::string nombre,unsigned int pos[3]){
     jugador* aux;
 
-    aux= this->jugadores;
+    aux= this->jugadores;   
 
-    if (aux->getSig() == aux)// si solo hay un jugador en la lista
+    while (aux != NULL)
     {
-        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
-        {
-            aux->retirarCarta(pos);
-        }
-        return;
-    }
-
-    while (aux->getSig() != this->jugadores)
-    {
-        if (aux->getName() == nombre) // si el nombre coincide le digo que retire la carta
+        if (aux->getName() == nombre)
         {
             aux->retirarCarta(pos);
             return;
@@ -297,11 +288,18 @@ void ronda::tirarCarta(std::string nombre,unsigned int pos[3]){
 
         aux=aux->getSig();
 
-        if (aux == NULL)
+        if (aux == this->jugadores)
         {
-            throw "error de continuidad de la lista";
-        }       
-    }  
+            if (aux->getName() == nombre)
+            {
+                aux->retirarCarta(pos);
+                return;
+            }
+            return;
+        }
+        
+    }
+    
 }
 
 //---------------------------------------------------------------------------------------------------------------------
