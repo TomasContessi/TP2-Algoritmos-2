@@ -1,5 +1,7 @@
 #include "gameConfig.hpp"
 
+
+
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
@@ -15,7 +17,7 @@
 
 gameConfig::gameConfig()
 {
-    std::string defaultPath ="../config/default_config";
+    std::string defaultPath ="../config/default_config.ini";
     this->loadConfig(defaultPath);
 }
 
@@ -28,14 +30,16 @@ gameConfig::~gameConfig()
 //---------------------------------------------------------------------------------------------------------------------
 
 void gameConfig::loadConfig(std::string path){ // por ahora esta hardcodeado hasta que aprenda a leer archivos de configuracion
+
     this->nCasillas={10,10,2};
-    this->nombres={"Lucas","IBogda"};
+    this->nombres={"Lucas","Bogda"};
     this->nJugadores=this->nombres.size();
     this->nSoldados=3;
     this->tipoMapa=isla;
     this->rutaGraficas="../graphics_20/";
     this->rutaTableros="../tableros/";
     this->idioma="esp";
+
 }
 
 //---------------------------------------------------------------------------------------------------------------------

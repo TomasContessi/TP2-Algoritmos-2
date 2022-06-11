@@ -92,7 +92,7 @@ void batallaCampal::generarImpresora(){
 
 void batallaCampal::cargarConfiguracion(){
 
-    this->cargarConfiguracion("../config/default_config");
+    this->cargarConfiguracion("../config/default_config.ini");
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -869,7 +869,7 @@ void batallaCampal::iniciarPartida(){
             
         }
     }
-
+    this->printPlayersScreens();
     cout << "etapa de preparacion terminada" << endl;
    
     this->estado = jugando; // cuando se agregan todos los soldados termine de iniciar
@@ -879,7 +879,17 @@ void batallaCampal::iniciarPartida(){
 //---------------------------------------------------------------------------------------------------------------------
 
 void batallaCampal::saludarGanador(){
+    std::string ganador;
+    ganador = this->rondita->getJugadorEnTurno();
+    if (ganador == "")
+    {
+        cout << "La partida termino sin un ganador :(" << endl;
+        return;
+    }
 
+    this->rondita->iniciarRonda();
+    cout << "FELICIDADES " << ganador <<endl;
+    cout << "GANASTE LA PARTIDA" << endl;
 }
 
 //---------------------------------------------------------------------------------------------------------------------

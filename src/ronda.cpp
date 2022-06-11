@@ -178,7 +178,7 @@ void ronda::avanzarTurno(){
 std::string ronda::getJugadorEnTurno(){
     if (this->jugadorEnTurno == NULL)
     {
-        throw "no hay jugadores en turno";
+        return "";
     }
     
     return this->jugadorEnTurno->getName();

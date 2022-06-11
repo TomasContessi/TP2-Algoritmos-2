@@ -94,7 +94,7 @@ void graficador::construirTablero(){
             }
 
             dimX=this->mapita->getCursor().data()[0];
-            dimY=this->mapita->getCursor().data()[1];
+            dimY=this->mapita->getDim()[1] - this->mapita->getCursor().data()[1] - 1;
 
             //en el comando kilometrico de abajo pego la imagen en el lugar del tablero de la casilla apuntada por el cursor
             RangedPixelToPixelCopy( imagen, 0,imagen.TellWidth()-1,imagen.TellHeight()-1 , 0, this->tablero, int(dimX*res), int(dimY*res)); 
@@ -199,7 +199,7 @@ void graficador::agregarCartas(){
             {
                 //imagen.WriteToFile("tst.bmp");
                 dimX=this->mapita->getCursor().data()[0];
-                dimY=this->mapita->getCursor().data()[1];
+                dimY=this->mapita->getDim()[1] - this->mapita->getCursor().data()[1] - 1;
 
                 //en el comando kilometrico de abajo pego la imagen en el lugar del tablero de la casilla apuntada por el cursor
                 RangedPixelToPixelCopyTransparent( imagen, 0,imagen.TellWidth()-1,imagen.TellHeight()-1 , 0, this->tablero, int(dimX*res), int(dimY*res), transparencia);

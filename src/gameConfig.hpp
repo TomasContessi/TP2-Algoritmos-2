@@ -2,6 +2,10 @@
 #define GAME_CONFIG_H
 
 #include <string>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+
 
 #include "mapa.hpp"
 
