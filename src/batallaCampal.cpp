@@ -388,7 +388,7 @@ bool batallaCampal::targetStrikeStage(std::vector<int> posA){
 
     while (this->rondita->getCardAmmo(posA.data()) > 0)
     {
-        cout << this->rondita->getCardAmmo(posA.data()) << this->mensaje.municionesRestantes << endl;
+        cout << this->rondita->getCardAmmo(posA.data()) << " " << this->mensaje.municionesRestantes << endl;
         cout << this->mensaje.aunDeseaAtacar << endl; 
         cout << this->mensaje.Y_N << endl;
 
@@ -459,15 +459,27 @@ bool batallaCampal::aditionalAtacksStage(){
                 cout << endl;
                 return false;
             }
+
+            if (this->rondita->getCardAmmo(pos.data()) < 1)
+            {
+                cout << "La carta no tiene municion restante" << endl; // si la casilla tenia un soldado devuelvo operacion fracasada y vuelvo a empezar
+                cout << endl;
+                return false;
+            }
+            
             
             while (this->targetStrikeStage(pos) == false){} // si la carta era valida paso a la parte de ataque
-            return true;
-        }
+            //return true;
+        }else
+        {
     
-        cout << this->mensaje.casillaInvalida << endl; // si la casilla era invalida devuelvo operacion fracasada y vuelvo a empezar
-        cout << endl;
+            cout << this->mensaje.casillaInvalida << endl; // si la casilla era invalida devuelvo operacion fracasada y vuelvo a empezar
+            cout << endl;
 
-        return false;
+            return false;
+        }
+
+        //this->printPlayersScreens();
     }
 
     return true; // si no tengo mas municion restante
@@ -504,6 +516,11 @@ bool batallaCampal::ingresarPosicion(std::vector<int> * pos){
 //---------------------------------------------------------------------------------------------------------------------
 
 void batallaCampal::buryBodies(){
+    if (this->rondita->contarJugadores()<1)
+    {
+        return;
+    }
+    
     for (size_t i = 0; i < this->configuracion->getPlayerNames().size(); i++)
     {
         if (this->rondita->contarCartas(this->configuracion->getPlayerNames()[i],soldado) < 1) //si no tiene soldados afuera
@@ -571,11 +588,11 @@ bool batallaCampal::ejecuarMecanica(){// estos recorridos pueden tomar un tiempo
                 pos[1]=j;
                 if (this->map->getTypeCasilla(pos) == mar && this->map->getStateCasilla(pos) == ocupada)
                 {
-                    if (this->rondita->getCardType(this->map->getPropietario(pos),pos.data()) != soldado) // si matara los soldados seria muy op
-                    {
+                    //if (this->rondita->getCardType(this->map->getPropietario(pos),pos.data()) != soldado) // la hice matar a los soldados dela gua porque las casillas de agua no se rompen
+                    //{
                         this->rondita->tirarCarta(this->map->getPropietario(pos),pos.data());
                         this->map->leaveCasilla(pos);
-                    }                    
+                   // }                    
                 }
                 
             }
@@ -687,8 +704,15 @@ void batallaCampal::atacarPosicion(int AoE , std::vector<int> pos){
             
         }
         
-    }  
+    }
 
+    this->printer->enmascarar(true);
+    if (this->rondita->contarCartas(this->rondita->getJugadorEnTurno(),dirigible)>0)
+    {
+        this->printer->enmascarar(false);
+    }
+    
+    this->printer->graficarPantalla(this->rondita->getJugadorEnTurno(),this->configuracion->getDimXYZ()[2]); // asi la pantalla se te actualiza despues de cada ataque
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -697,15 +721,15 @@ void batallaCampal::atacarPosicion(int AoE , std::vector<int> pos){
 
 void batallaCampal::cargarIdioma(){
     this->mensaje.coordenadas.resize(3);
-    this->mensaje.tiposDeCartas.resize(9);
-    if (this->configuracion->getLanguage() == "esp") // deberia haber ido cargando los mensajes mientras los iba precisando porque ahora no me acuerdo para que se usaba c/u
+    this->mensaje.tiposDeCartas.resize(9);//igual que estos numeros, deberia ser algo tipo CARD_NUMBER 9 y MAP_DIM_NUMBER 3
+    if (this->configuracion->getLanguage() == "esp") // estos deberian ser macros en un .h de idiomas pero no me alcanzo el tiempo asi que los harcodeo 
     {
         this->mensaje.ataqueExitoso="Ataque exitoso";
         this->mensaje.aunDeseaAtacar="Aun desea atacar?";
         this->mensaje.aunDeseaMover="Aun desea mover?";
         this->mensaje.aviones="aviones";
         this->mensaje.barcos="barcos";
-        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.2";
+        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.3";
         this->mensaje.cartaPosInvalid="Posicion invalida";
         this->mensaje.cartas="cartas";
         this->mensaje.casillaDestruida="casilla destruida";
@@ -750,7 +774,7 @@ void batallaCampal::cargarIdioma(){
         this->mensaje.aunDeseaMover="Still want to move?";
         this->mensaje.aviones="aviones";
         this->mensaje.barcos="barcos";
-        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.2";
+        this->mensaje.bienvenida="Bienvenidos a Batalla campal 2 V1.0.3";
         this->mensaje.cartaPosInvalid="Invalid position";
         this->mensaje.cartas="cards";
         this->mensaje.casillaDestruida="destroyed box";
@@ -880,6 +904,7 @@ void batallaCampal::iniciarPartida(){
 
 void batallaCampal::saludarGanador(){
     std::string ganador;
+    this->buryBodies();
     ganador = this->rondita->getJugadorEnTurno();
     if (ganador == "")
     {

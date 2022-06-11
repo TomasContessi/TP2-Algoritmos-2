@@ -9,61 +9,18 @@
 #include "ronda.hpp"
 #include "mapa.hpp"
 #include "graficador.hpp"
+#include "estadoPartida.hpp"
+#include "mensajes.hpp"
 
 //---------------------------------------------------------------------------------------------------------------------
 //                                   CONTESSI TOMAS 99199 ALORITMOS Y PROGRAMACION II
 //---------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------BATALLA CAMPAL 2 V2.2-------------------------------------------------
+//--------------------------------------------      BATALLA CAMPAL 2      ---------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
-//                                        DEFINICION DE LA CLASE BATALLA CAMPAL
+//                                     DEFINICION DE LA CLASE BATALLA CAMPAL V1.0.3
 //---------------------------------------------------------------------------------------------------------------------
 
-enum EstadoPartida_T {
-    iniciando,
-    jugando,
-    pausada,
-    terminada
-};
 
-struct mensaje_t // aca voy a ir cargando los mensajes que voy a mostrar por consola y con un metodo puedo cambiar el idioma
-{   
-    std::string bienvenida;
-    std::string ingreseNombre;
-    std::string cartas;
-    std::string listo;
-    std::string Y_N;
-    std::string casillaInvalida;
-    std::string deseaAtacar;
-    std::string deseaMover;
-    std::string aunDeseaMover;
-    std::string aunDeseaAtacar;
-
-
-    std::string moviendoTropas;
-    std::string casillaOcupada;
-    std::string casillaDestruida;
-    std::string municionesRestantes;
-    std::string tropasPerdidas;
-
-    std::string noSoldados;
-
-    std::string ataqueExitoso;
-
-    std::string conservarCarta;
-    std::string ingreseCoordenada;
-    std::vector<std::string> coordenadas;
-    std::vector<std::string> tiposDeCartas;
-    std::string coordenadaInvalida;
-    std::string cartaPosInvalid;
-    std::string elegirCarta;
-
-    std::string aviones;
-    std::string misiles;
-    std::string barcos;
-    std::string soldados;
-    std::string dirigibles;
-
-};
 
 
 class batallaCampal
@@ -79,60 +36,60 @@ private:
 
 
 
-    //pre
+    //pre haber cargado previamente la configuracion
     //pos genera el mapa de la partida
-    void generarMapa();//
+    void generarMapa();
 
-    //pre
-    //pos
-    void generarRonda();//
+    //pre haber cargado previamente la configuracion
+    //pos genera la ronda de jugadores
+    void generarRonda();
 
-    //pre
-    //pos
-    void generarImpresora();//
+    //pre haber cargado previamente el mapa y la ronda
+    //pos genera la clase que se va a usar para graficar
+    void generarImpresora();
 
-    //pre
-    //pos
-    void cargarConfiguracion();//
+    //pre que el path de la configuracion tenga un archivo de configuracion valido
+    //pos carga la configuracion del path default
+    void cargarConfiguracion();
 
-    //pre
-    //pos
-    void cargarConfiguracion(std::string);//
+    //pre que el path de la configuracion tenga un archivo de configuracion valido
+    //pos carga la configuracion del path especifico
+    void cargarConfiguracion(std::string path);
 
-    //pre
-    //pos
+    //pre haber cargado la configuracion y que el idioma sea esp o eng
+    //pos carga los mensajes del idioma especificado en la configuracion
     void cargarIdioma();
 
-    //pre
-    //pos
-    bool playerReady();//
+    //pre haber generado antes la ronda y cargado el idioma
+    //pos pregunta si el jugador esta listo
+    bool playerReady();
 
-    //pre
-    //pos
-    bool atackStage();//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos realiza la etapa de ataque
+    bool atackStage();
 
-    //pre
-    //pos
-    bool regroupStage();//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos realiza la etapa de mover tropas
+    bool regroupStage();
 
-    //pre
-    //pos
-    bool cardChoiceStage();//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos pregunta si queres concervar la carta nueva y tambien realiza la mecanica de las cartas de desastre
+    bool cardChoiceStage();
 
-    //pre
-    //pos
-    bool cardSelectionStage(std::vector<int>*);//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos carga las coordenadas ingresadas por el usuario
+    bool cardSelectionStage(std::vector<int>* pos);
 
-    //pre
-    //pos
-    bool targetStrikeStage(std::vector<int>);//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos usando la carta de la posicion A pide la nueva posicion y realiza el ataque
+    bool targetStrikeStage(std::vector<int> posA);
 
-    //pre
-    //pos
-    bool moveStage(std::vector<int>);//
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos similar a targetStrike pero esta mueve la carta a la nueva posicion
+    bool moveStage(std::vector<int> posA);
 
-    //pre
-    //pos
+    //pre haber generado antes el mapa, la ronda y cargado el idioma
+    //pos similar a atackStage, pero esta no permite seleccionar soldados porque estos no dan ataques adicionales
     bool aditionalAtacksStage();//
 
     //pre
