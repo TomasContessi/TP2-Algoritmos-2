@@ -78,51 +78,51 @@ public:
     void takeCasilla(std::vector<int>,std::string);
 
     //pre:
-    //pos:
+    //pos: verifica que la casilla en la posicion indicada sea valida (este dentro del tablero)
     bool verificarCasilla(std::vector<int>);
 
     //pre:
-    //pos:
+    //pos: apunta el cursor al inicio del tablero
     void iniciarCursor();
 
     //pre:
-    //pos:
+    //pos: avanza el cursor una posicion en x y deuvuelve true si pudo avanzar y false si no
     bool avanzarCursorX();
 
     //pre:
-    //pos:
+    //pos: avanza el cursor una posicion en y y deuvuelve true si pudo avanzar y false si no
     bool avanzarCursorY();
 
     //pre:
-    //pos:
+    //pos: avanza el cursor una posicion en z y deuvuelve true si pudo avanzar y false si no
     bool avanzarCursorZ();
 
     //pre:
-    //pos:
+    //pos: retrocede el cursor una posicion en x y deuvuelve true si pudo retroceder y false si no
     bool retrocederCursorX();
 
     //pre:
-    //pos:
+    //pos: retrocede el cursor una posicion en y y deuvuelve true si pudo retroceder y false si no
     bool retrocederCursorY();
 
     //pre:
-    //pos:
+    //pos: retrocede el cursor una posicion en z y deuvuelve true si pudo retroceder y false si no
     bool retrocederCursorZ();
 
     //pre:
-    //pos:
+    //pos: mueve el cursor en la direccion indicada y devuele true si pudo avanzar y false si no
     bool stepCursor(direccion_T);
 
     //pre:
-    //pos:
+    //pos: apunta el cursor a la casilla indicada
     void jumpCursor(std::vector<int>);
     
     //pre:
-    //pos:
+    //pos: devuelve la posicion a la que apunta el cursor
     std::vector<int> getCursor();
 
     //pre:
-    //pos:
+    //pos: devuelve las dimensiones del tablero
     std::vector<int> getDim();
     
 };

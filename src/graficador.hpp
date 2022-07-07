@@ -56,7 +56,7 @@ private:
     void contruirPantalla();
 
     //pre:
-    //pos:
+    //pos: se supone que selecciona la grafica para la casilla pero anda ninguno de los dos
     void imgSelector(BMP,CasillaTipo_T,CasillaEstado_T);
 
     //pre:
@@ -94,15 +94,15 @@ private:
     void cargarGraficas();
 
     //pre:
-    //pos:
+    //pos: cambia la variable interna que dice si el mapa se muestra o no
     void enmascarar(bool);
 
     //pre:
-    //pos:
+    //pos: carga los punteros al mapa y a la ronda para recorrerlos al graficar
     void cargarMapa(mapa*,ronda*);
 
     //pre:
-    //pos:
+    //pos: se suponia que el mapa iba a tener un fondo con el nombre  del juego y demas pero no alcanzo el tiempo
     void cambiarFondo(std::string);
 
 };

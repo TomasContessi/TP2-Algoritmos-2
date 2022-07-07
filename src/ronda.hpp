@@ -128,11 +128,11 @@ public:
     TiposCarta_T getCardType();
 
     //pre:
-    //pos:
+    //pos: devuelve el estado del jugaor con el nombre psado por argumento
     EstadoJugador_T getPlayerState(std::string);
 
     //pre:
-    //pos:
+    //pos: verifica si el jugador en turno tiene una carta en la posicion indicada
     bool verificarCartaExistente(std::vector<int>);
 };
 

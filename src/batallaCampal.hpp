@@ -2,7 +2,7 @@
 #define BATALLA_CAMPAL_H
 
 #include <iostream>
-#include <cstdlib>
+//#include <cstdlib>
 #include <vector>
 
 #include "gameConfig.hpp"
@@ -93,31 +93,31 @@ private:
     bool aditionalAtacksStage();//
 
     //pre
-    //pos
+    //pos pide las coordenadas y las carga en la variable pasada como puntero, devuelve true cuando la operacion termino y false cuando fallo
     bool ingresarPosicion(std::vector<int>*);//
 
     //pre
-    //pos
+    //pos verifica que la carta pueda ser posicionada en la posicion pasada por argumento
     bool verificarPosicionCarta(TiposCarta_T,std::vector<int>);//
 
     //pre
-    //pos
+    //pos verifica que la carta pueda pasar de la posicion A a la posicion B
     bool verificarPosicionCarta(TiposCarta_T,std::vector<int> posA,std::vector<int> posB);//
 
     //pre
-    //pos
+    //pos verifica que la posicion A y la B se encuentren mas cerca que el rango pasado
     bool verificarRange(int range,std::vector<int> posA,std::vector<int> posB);//
 
     //pre
-    //pos
+    //pos elimina a los jugadores que no tienen mas soldados
     void buryBodies();//
 
     //pre
-    //pos
+    //pos ataca a la posicion pasada por argumento con el area de efecto indicada
     void atacarPosicion(int Aoe , std::vector<int> pos);//
 
     //pre
-    //pos
+    //pos ejecuta la mecanica de la carta que se acaba de levantar
     bool ejecuarMecanica();//
 
 public:
@@ -131,7 +131,7 @@ public:
     virtual ~batallaCampal();
 
     //pre
-    //pos
+    //pos inicializa la partida pidiendole a los jugadores que posicionen los soldados iniciales
     void iniciarPartida();
 
     //pre
@@ -139,7 +139,7 @@ public:
     void ejecutarTurno();
 
     //pre
-    //pos
+    //pos verifica el numero de jugadores que aun tienen soldados
     int verificarJugadores();
 
     //pre que haya un ganador
@@ -147,11 +147,11 @@ public:
     void saludarGanador();
 
     //pre
-    //pos
+    //pos devuelve el estado de la partida
     EstadoPartida_T getState();
 
     //pre
-    //pos
+    //pos imprime las pantallas de los jugadores
     void printPlayersScreens();
 };
 

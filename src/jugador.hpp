@@ -97,7 +97,7 @@ public:
     void reloadCardAmmo ();
 
     //pre:
-    //pos:
+    //pos: verifica si el jugador en turno tiene una carta en la posicion indicada
     bool verificarCarta (std::vector<int> pos);
     
 };

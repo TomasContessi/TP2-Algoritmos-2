@@ -43,39 +43,39 @@ public:
     ~gameConfig();
 
     //pre:
-    //pos:
+    //pos: carga la configuracion desde el path pasado como argumento
     void loadConfig(std::string);
 
     //pre:
-    //pos:
+    //pos: devuelve el numero de jugadores
     int getPlayerNumber();
 
     //pre:
-    //pos:
+    //pos: devuelve la cantidad de tropas
     int getTroopsNumber();
 
     //pre:
-    //pos:
+    //pos: devuelve la dimension del mapa
     std::vector<int> getDimXYZ ();
 
     //pre:
-    //pos:
+    //pos: devuelve el tipo de mapa
     TipoMapa_T getMapType();
 
     //pre:
-    //pos:
+    //pos: devuelve los nombres de los jugadores
     std::vector<std::string> getPlayerNames();
 
     //pre:
-    //pos:
+    //pos: devuelve el path para las graficas
     std::string getGraficsPath();
 
     //pre:
-    //pos:
+    //pos: devuelve el path de salida de los tableros
     std::string getOutPath();
 
     //pre:
-    //pos:
+    //pos: devuelve el lengueje del juego
     std::string getLanguage();
 };
 

@@ -88,7 +88,7 @@ public:
     CasillaTipo_T getTipo();
 
     //pre:
-    //pos:
+    //pos: devuelve el nombre de quien tiene la casilla
     std::string getOcupante();
 
     //pre: que la casilla nueva exista y su posicion sea concordante con las otras casillas limitrofes
@@ -124,7 +124,7 @@ public:
     void setEstado (CasillaEstado_T,std::string);
 
     //pre:
-    //pos:
+    //pos: setea el nombre de quien tiene la casilla
     void setOcupante (std::string);
 };
 
